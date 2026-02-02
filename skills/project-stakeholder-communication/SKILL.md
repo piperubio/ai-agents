@@ -1,5 +1,5 @@
 ---
-name: stakeholder-communication
+name: project-stakeholder-communication
 description: >
   Stakeholder Communication: prepare clear, context-aware communications for
   project stakeholders (clients, executives, internal teams). Use to draft

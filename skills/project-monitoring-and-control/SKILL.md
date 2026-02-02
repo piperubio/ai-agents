@@ -1,5 +1,5 @@
 ---
-name: monitoring-and-control
+name: project-monitoring-and-control
 description: >
   Monitoring & Control: continuously compare planned vs actual project
   progress, detect deviations early, generate indicative forecasts, and emit

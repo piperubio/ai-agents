@@ -1,5 +1,5 @@
 ---
-name: risk-and-issue-management
+name: project-risk-and-issue-management
 description: >
   Risk & Issue Management: identify, assess, prioritize and manage risks and
   active issues in consulting projects. Use when monitoring project health,

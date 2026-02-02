@@ -1,5 +1,5 @@
 ---
-name: high-level-planning
+name: project-high-level-planning
 description: >
   High-Level Planning: produce a concise, risk-aware, consultant-ready
   high-level plan from an intake-level project state. Use after a successful

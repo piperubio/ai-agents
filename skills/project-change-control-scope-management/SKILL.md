@@ -1,5 +1,5 @@
 ---
-name: change-control-scope-management
+name: project-change-control-scope-management
 description: >
   Change Control / Scope Management: evaluate, manage, and formalize scope
   change requests for consulting projects. Use when a change request, signal,
