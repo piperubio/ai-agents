@@ -1,76 +1,98 @@
 ---
 name: consulting-project-planner
-description: "Create comprehensive project plans for consulting and engineering engagements: define scope, WBS, timeline with dependencies, resource allocation, risk register, deliverables, and client-facing artifacts. Use when you need to create a new project plan, replan after changes, prepare kickoff materials, or produce a clear PROJECT_PLAN.md for stakeholders."
+description: "General-purpose, content-first project planning assistant: create or replan project plans, generate risk registers and concise pipeline status summaries. Use when you need to scope a project, replan after changes, prepare kickoff artifacts, or produce stakeholder-ready summaries. Triggers: 'plan project', 'create project plan', 'replan project', 'generate risk register'."
 ---
 
 # Consulting Project Planner
 
 Purpose
 
-Provide a concise, repeatable workflow to produce professional project plans for consulting and engineering engagements. Focus on clear scope definition, vertical-sliced work breakdown structures (WBS), dependency-aware timelines, resource allocation, and an auditable risk register.
+Produce stakeholder-ready project artifacts using a content-first contract: the skill defines the required semantic contents of each output (what must be present), not a required file format. Templates in `assets/` are optional examples.
 
-When to use (examples included in description above)
+Inputs (required vs optional)
 
-- New project scoping and planning
-- Replanning after delays or scope changes
-- Preparing client kickoff materials and acceptance criteria
-- Producing deliverables to hand to execution teams or clients
+- Required (minimum to start):
+  - `projectName` (string)
+  - `oneLiner` (string) — problem + user + outcome
+  - `objectives` (array of strings)
+  - `scopeIn` (array of strings) and `scopeOut` (array of strings)
+  - `milestones` (array of objects: `{name,startDate,endDate,owner}`)
+  - `team` (array of objects: `{role,name,capacity}`)
+- Optional:
+  - `constraints`, `assumptions`, `knownDependencies`, `knownRisks`
+  - `desiredOutputs` (array: any of `project_plan`, `risk_register`, `pipeline_status`, `gantt`) — default: all
 
-Quick triggers (natural language examples)
+How to provide missing inputs
 
-- "plan project [Project Name]"
-- "create project plan for [Client]"
-- "replan project [Project Name]"
-- "quick project kickoff for [Idea]"
-- "generate risk register for [Project]"
+- Run the discovery briefing (`references/briefing-template.md`) with the client or ask follow-up prompts to collect missing fields.
 
-Core workflows
+Invocation examples (natural language)
 
-- Create New Project Plan
-  1. Run the briefing template (references/briefing-template.md) with the client to collect objectives, constraints, stakeholders, and acceptance criteria.
-  2. Write a one-liner (problem + target user + key outcome).
-  3. Define V1 scope (max 5 core features/deliverables) and a "Not Yet" list.
-  4. Build WBS: phases → epics → tasks (aim for 4–8 hour atomic tasks). Record owner and estimate for each task.
-  5. Map dependencies and compute critical path; apply contingency (recommended 15–25%).
-  6. Allocate resources by role and availability; note skill gaps.
-  7. Produce `PROJECT_PLAN.md` (see assets/project-plan-template.md) and `PIPELINE_STATUS.md`.
+- "Plan project Acme Checkout — 3-month MVP, backend + frontend, target 2026-05-15"
+- "Replan 'Mobile Redesign' because of a 2-week API delay — update timeline and risk register"
+- "Generate a risk register for Project X focusing on external vendor dependencies"
 
-- Update / Replan
-  1. Compare actual progress vs planned (dates, completed tasks).
-  2. Identify blockers and external dependencies.
- 3. Recalculate dates and update dependencies.
- 4. Update risk register and resource plan.
- 5. Communicate changes and publish revised `PROJECT_PLAN.md`.
+Deterministic Workflow (step-by-step)
 
-- Quick Kickoff (MVP/POC)
-  1. One-liner and 3–5 core features.
-  2. Select stack and minimal architecture assumptions.
-  3. Create a 2-week sprint plan with daily checkpoints.
-  4. Produce minimal project artifacts: `PROJECT_PLAN.md` (trimmed), `PIPELINE_STATUS.md`.
+1. Validate inputs; if required fields are missing, ask clarifying questions or run the briefing template.
+2. Produce the one-liner and confirm V1 scope (limit to 3–5 core deliverables). Record explicit "Not Yet" items.
+3. Build a vertical WBS: phases → epics → tasks. Aim for 4–8h atomic tasks; for each task record owner and estimate.
+4. Map dependencies between tasks, compute the critical path, and apply contingency (recommended 15–25%) with rationale.
+5. Allocate resources by role and availability; flag skill gaps and capacity constraints.
+6. Identify risks from inputs and WBS; score probability × impact and propose mitigations.
+7. Generate content-first outputs (see Outputs) and offer optional exports (CSV, spreadsheet, PPT) on request — exports are conversions of the semantic contents, not the primary contract.
 
-Outputs
+Outputs (content-first descriptions)
 
-- `PROJECT_PLAN.md` — canonical project plan for stakeholders (use assets/project-plan-template.md)
-- `PIPELINE_STATUS.md` — current stage and checkpoint status
-- `RISK_REGISTER.md` — structured list of risks with probability, impact, and mitigation
-- `GANTT.csv` or simple timeline table (optional export by tooling)
+Each output is defined by the semantic elements it must contain. Consumers may request any format (Markdown, CSV, JSON, PPTX), but the skill guarantees the content contract below.
 
-References and templates
+- PROJECT_PLAN (canonical plan) — must include:
+  - Executive summary: purpose, primary objective, expected outcome, plan version & last updated
+  - One-liner
+  - Objectives and success metrics / KPIs
+  - Scope: In scope / Out of scope (explicit)
+  - Deliverables and acceptance criteria with owners
+  - Schedule & Milestones: list with start/end dates and owners
+  - WBS: phases → epics → tasks with owners and estimates
+  - Dependencies & critical path with contingency rationale
+  - Resources & roles: capacity assumptions and named owners
+  - Estimates & budget summary with method and contingency
+  - Assumptions, constraints
+  - Risks & mitigations (summary; full register exported separately)
+  - Change control and handover checklist
 
-- `references/briefing-template.md` — client briefing form (use at discovery)
-- `references/estimation-guidelines.md` — estimation factors and size categories
-- `references/checklists.md` — kickoff, QA, and handover checklists
-- `assets/project-plan-template.md` — `PROJECT_PLAN.md` skeleton to copy into project root
+- RISK_REGISTER — structured list for each risk containing:
+  - id, title/description, probability (High/Med/Low or %), impact (High/Med/Low or scale), mitigation actions, owner, status, notes
+  - recommended monitoring cadence and trigger conditions for escalation
 
-Best practices (short)
+- PIPELINE_STATUS — concise checkpoint summary containing:
+  - current phase, percent complete, top 3 blockers, next milestones (with dates), critical dependencies, and a short communications summary for stakeholders
 
-- Enforce a scope fence: always record what is out of V1.
-- Use vertical slicing: deliver end-to-end increments instead of layered work.
-- Plan for ~70% effective capacity per person to allow for meetings and context switching.
-- Update the plan weekly and track assumptions explicitly.
+- GANTT (semantic timeline) — list of milestones/tasks with start/end dates and dependencies suitable for export to CSV or timeline tools
 
-Integration notes
+References & assets
 
-This skill contains templates and references only. For automation or exports (Excel, PPTX, issue creation) attach separate tooling or scripts; keep outputs simple and human-readable by default.
+- Use `references/briefing-template.md` for discovery. Use `references/estimation-guidelines.md` and `references/checklists.md` for estimates and QA.
+- Use `assets/project-plan-template.md` as a skeleton if a file-based template is requested. `assets/` contains example templates but the skill's contract is content-first.
 
-See the `references/` and `assets/` folders for templates to use while running the workflows.
+Quality and acceptance criteria
+
+- Each produced artifact must include the semantic elements listed above. For example, a `PROJECT_PLAN` without a WBS or without owners is incomplete.
+- When asked to export to a format (Markdown, CSV, JSON), confirm that the consumer accepts converted representations of the same semantic contents.
+
+Progressive disclosure
+
+- Keep the generated plan concise by default; expand sections on request. Load large references only when required.
+
+Quick example (minimal)
+
+- Input: `projectName: 'Acme Checkout', oneLiner: 'Enable secure checkout for Acme customers', milestones: [...]`
+- Output: a `PROJECT_PLAN` containing the one-liner, scope, 4 milestones, WBS with owners and estimates, a short risk summary, and a `PIPELINE_STATUS` one-pager.
+
+Best practices
+
+- Prefer vertical slicing and deliveries that produce end-to-end value.
+- Keep task estimates at the 4–8 hour granularity; use contingency for unknowns.
+- Update the plan weekly and record assumptions and changes explicitly.
+
+See `assets/` and `references/` for templates and examples. Templates are optional: rely on the content descriptions above as the authoritative contract.
