@@ -32,110 +32,73 @@ Scope: What this skill does and does not do
   - Replace stakeholder negotiation or contractual decisions
 
 Inputs (OpenCode-friendly)
-```yaml
-inputs:
-  project_state: object
-  planning_parameters?: object  # optional preferences (e.g., preferred cadence)
-```
+- **project_state**: A Markdown document following the template in `pm-core-agent.md`.
+- **planning_parameters**: Optional preferences or constraints for the planning process.
 
 Outputs (contract)
-```yaml
-outputs:
-  updated_project_state: object
-  plan_high_level:
-    phases:
-      - name: string
-        goals: string
-        milestones: [string]
-        acceptance_criteria: [string]
-    estimated_size: S|M|L
-    duration_range: { min_weeks: int, max_weeks: int } | null
-  clarifying_questions:              # only if unresolved gaps remain
-    - question: string
-      impact: low|medium|high
-  notes: string
-```
+The output must be a Markdown document following this structure:
 
-Fields this skill may write in project_state
-- Allowed writes: `plan_high_level`, `risks` (update/add), `open_questions`,
-  `meta.current_phase` (e.g., `detailed-planning-ready`), `resource_needs`.
-- Must NOT write or modify: `decisions_log`, `communication`.
+# Output: High-Level Planning
 
-Guardrails (must follow)
-1. Use only information already present in `project_state` or explicitly
-   provided by the caller. Do not invent data.
-2. When estimating, use ranges or qualitative sizes (S/M/L) and document
-   assumptions that drove the sizing.
-3. Elevate any unresolved `open_questions` with `impact: high` rather than
-   guessing answers.
-4. Keep the plan consultant-ready and actionable but avoid commit-level language
-   (no "we will deliver by X date" unless a date range is explicitly requested
-   and supported by evidence).
+## Updated Project State
+[Full updated Markdown document]
+
+## Plan Details
+- **Estimated Size**: S | M | L
+- **Duration Range**: [Min weeks] - [Max weeks] weeks
+
+## Clarifying Questions
+- [Question] (Impact: low | medium | high)
+
+## Notes
+[AI observations and guidance]
 
 Skill prompt (use this prompt when invoking the skill)
 ```
 You are a High-Level Planning skill for consulting projects. Your input is a
-project_state produced by the Project Intake & Charter skill.
+project_state (Markdown) produced by the Project Intake & Charter skill.
 
-Your task is to produce a concise, risk-aware high-level plan that:
-- Defines 2–5 logical phases with clear goals and 1–3 milestones each
-- Provides measurable acceptance criteria for each milestone
-- Gives a high-level size estimate (S/M/L) and a conservative duration range
-- Identifies major dependencies and resource needs
-- Updates risks and open questions (escalate high-impact gaps)
+Your task is to produce a concise, risk-aware high-level plan and return a
+response following the "# Output: High-Level Planning" Markdown format.
+
+You must:
+- Update the "High-Level Plan", "Risks", and "Open Questions" sections in the project_state Markdown.
+- Define 2–5 logical phases with clear goals and 1–3 milestones each.
+- Provide measurable acceptance criteria for each milestone.
+- Give a high-level size estimate (S/M/L) and a conservative duration range.
+- Identify major dependencies and resource needs.
 
 You must NOT:
-- Produce task-level plans, exact schedules, or precise cost commitments
-- Invent missing facts
-
-When important information is missing, create `clarifying_questions` with an
-impact rating. Prefer conservative assumptions and document them clearly.
-All outputs must be structured and directly usable by downstream agents.
+- Produce task-level plans, exact schedules, or precise cost commitments.
+- Invent missing facts.
 ```
 
-Example execution (based on intake example)
+Example execution (realistic)
 
-Input (derived from intake)
-```yaml
-project_state:
-  meta:
-    name: Customer Data Platform Migration
-    current_phase: intake
-  objectives:
-    problem_statement: "Current data platform does not support timely and
-      reliable reporting"
-    business_objectives: ["Improve data freshness", "Increase stakeholder trust"]
-  scope: {...}
-  stakeholders: [...]
-```
+**Input**
+- project_state: "# Project: Customer Data Platform Migration..."
+- planning_parameters: "None provided"
 
-Output (summarized)
-```yaml
-plan_high_level:
-  phases:
-    - name: Assessment
-      goals: Inventory sources, map pipelines, identify quick wins
-      milestones: ["Data sources inventory complete", "Initial QA report"]
-      acceptance_criteria: ["Inventory covers >90% of BI reports"]
-    - name: Target Architecture & Prioritization
-      goals: Define target architecture and migration phasing
-      milestones: ["Target architecture approved", "MVP scope defined"]
-      acceptance_criteria: ["MVP covers priority reports"]
-    - name: Pilot & Handoff
-      goals: Implement pilot migration for prioritized sources
-      milestones: ["Pilot implemented", "Operational handoff"]
-      acceptance_criteria: ["Pilot meets SLA and quality thresholds"]
-  estimated_size: M
-  duration_range: { min_weeks: 8, max_weeks: 20 }
+**Output**
+# Output: High-Level Planning
 
-clarifying_questions:
-  - question: "Which data sources must be in phase 1?"
-    impact: high
+## Updated Project State
+# Project: Customer Data Platform Migration
+...
+## High-Level Plan
+### Phases
+- **Phase 1: Assessment**: Inventory sources, map pipelines. Deliverables: [Inventory, QA Report]. Effort: s.
+- **Phase 2: Architecture**: Define target architecture. Deliverables: [Design Doc]. Effort: m.
 
-notes: >
-  Estimates assume existing data sources are accessible and client can allocate
-  one dedicated data engineer part-time during Assessment.
-```
+## Plan Details
+- **Estimated Size**: M
+- **Duration Range**: 8 - 16 weeks
+
+## Clarifying Questions
+- Which data sources must be in phase 1? (Impact: high)
+
+## Notes
+Estimates assume access to data sources.
 
 Interaction with the PM Core Agent
 - PM Core Agent invokes High-Level Planning after intake completes and no

@@ -34,11 +34,8 @@ Scope: What this skill does and does not do
   - Send formal external communications
 
 Inputs (OpenCode-friendly)
-```yaml
-inputs:
-  project_state: object
-  user_input: string
-```
+- **project_state**: A Markdown document following the template in `pm-core-agent.md`.
+- **user_input**: Fragmented or ambiguous project request.
 
 Notes
 - `project_state` may be incomplete or partially populated.
@@ -46,14 +43,18 @@ Notes
 - The skill must tolerate ambiguity and avoid inventing facts.
 
 Outputs (contract)
-```yaml
-outputs:
-  updated_project_state: object
-  clarifying_questions:
-    - question: string
-      impact: low | medium | high
-  notes: string
-```
+The output must be a Markdown document following this structure:
+
+# Output: Project Intake & Charter
+
+## Updated Project State
+[Full updated Markdown document]
+
+## Clarifying Questions
+- [Question] (Impact: low | medium | high)
+
+## Notes
+[AI observations and guidance]
 
 - `updated_project_state`: only modify or add the specific fields listed in
   "Fields this skill may write"; do not overwrite unrelated sections.
@@ -80,96 +81,72 @@ Skill prompt (use this prompt when invoking the skill)
 ```
 You are a Project Intake & Charter skill for consulting projects.
 
-Your task is to analyze the provided project context and user input, and
-produce a clear project foundation.
+Your task is to analyze the provided project_state (Markdown) and user input, and
+return a response following the "# Output: Project Intake & Charter" Markdown format.
 
 You must:
-- Clarify the real problem being solved
-- Identify business objectives (not solutions)
-- Define measurable success criteria
-- Explicitly define what is in scope and out of scope
-- Surface assumptions and constraints
-- Identify key stakeholders
-- Identify initial project risks
-- Detect missing or ambiguous information
+- Update the project_state by filling in Metadata, Objectives, Scope, Stakeholders, and Risks.
+- Clarify the real problem being solved.
+- Identify business objectives and measurable success criteria.
+- Define what is in scope and out of scope.
+- Surface assumptions and constraints.
+- Detect missing or ambiguous information and formulate clarifying questions.
 
 You must NOT:
-- Perform detailed planning
-- Commit to timelines or costs
-- Make final business decisions
-- Assume information not explicitly provided
-
-If critical information is missing:
-- Formulate clear clarification questions
-- Assign an impact level to each question
-
-All outputs must be structured and directly usable to update the project state.
-Clarity and correctness are more important than completeness.
+- Perform detailed planning or commit to timelines/costs.
+- Assume information not explicitly provided.
 ```
 
 Example execution (realistic)
 
-Input
-```yaml
-project_state:
-  meta:
-    name: Customer Data Platform Migration
-    type: data
-    client: ACME Corp
-    current_phase: intake
+**Input**
+- project_state: "# Project: Customer Data Platform Migration..."
+- user_input: "We want to migrate our current data platform because reporting is slow..."
 
-user_input: >
-  We want to migrate our current data platform to something more modern
-  because reporting is slow and teams don’t trust the data.
-```
+**Output**
+# Output: Project Intake & Charter
 
-Output (summarized)
-```yaml
-updated_project_state:
-  objectives:
-    problem_statement: >
-      Current data platform does not support timely and reliable reporting,
-      causing low trust in analytics and delayed decision-making.
-    business_objectives:
-      - Improve data freshness and reliability
-      - Increase stakeholder trust in analytics
-    success_criteria:
-      - Core dashboards refresh within agreed SLA
-      - Reduction in data quality incidents
+## Updated Project State
+# Project: Customer Data Platform Migration
+## Metadata
+- **Type**: data
+- **Client**: ACME Corp
+- **Current Phase**: intake
 
-  scope:
-    in_scope:
-      - Assessment of current data platform
-      - Design of target data architecture
-    out_of_scope:
-      - Full implementation of all downstream dashboards
-    assumptions:
-      - Existing data sources remain unchanged
-    constraints:
-      - Limited availability of client data engineers
+## Objectives
+### Problem Statement
+Current data platform does not support timely and reliable reporting.
 
-  risks:
-    - description: Data quality issues may be deeper than initially visible
-      probability: medium
-      impact: high
-      status: open
+### Business Objectives
+- Improve data freshness and reliability
+- Increase stakeholder trust in analytics
 
-  open_questions:
-    - question: Which data sources are included in the first migration phase?
-      impact: high
-    - question: What reporting SLAs are expected by the business?
-      impact: medium
+### Success Criteria
+- Core dashboards refresh within agreed SLA
+- Reduction in data quality incidents
 
-clarifying_questions:
-  - question: Which data sources are included in the first migration phase?
-    impact: high
-  - question: What reporting SLAs are expected by the business?
-    impact: medium
+## Scope
+### In Scope
+- Assessment of current data platform
+- Design of target data architecture
+### Out of Scope
+- Full implementation of all downstream dashboards
+### Assumptions
+- Existing data sources remain unchanged
+### Constraints
+- Limited availability of client data engineers
 
-notes: >
-  Scope intentionally limited to assessment and design pending clarification
-  on data sources and SLAs.
-```
+## Risks
+| ID | Description | Probability | Impact | Mitigation | Status |
+|----|-------------|-------------|--------|------------|--------|
+| R1 | Data quality issues may be deeper | medium | high | Deep dive assessment | open |
+
+## Clarifying Questions
+- Which data sources are included in the first migration phase? (Impact: high)
+- What reporting SLAs are expected by the business? (Impact: medium)
+
+## Notes
+Scope intentionally limited to assessment and design pending clarification.
 
 Interaction with the PM Core Agent
 - PM Core Agent detects `meta.current_phase` == `intake` and invokes this

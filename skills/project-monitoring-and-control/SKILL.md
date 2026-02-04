@@ -40,38 +40,34 @@ Role: what this skill does and does not do
   - Re-plan or execute mitigation actions
 
 Inputs
-```yaml
-inputs:
-  project_state: object
-  latest_updates: object
-```
+- **project_state**: A Markdown document following the template in `pm-core-agent.md`.
+- **latest_updates**: A list or description of recent project signals (e.g., delays, blockers).
 
 `latest_updates` may include informal or structured signals: progress notes,
 delays, blockers, stakeholder feedback, or weak signals like "this feels slow".
 
 Outputs (contract)
-```yaml
-outputs:
-  project_health:
-    status: green | yellow | red
-    rationale: string
-  deviations:
-    - description: string
-      area: scope | timeline | effort | quality | assumptions
-      severity: low | medium | high
-  forecast:
-    description: string
-    confidence: low | medium | high
-  alerts:
-    - message: string
-      urgency: low | medium | high
-      recommended_next_skill:
-        - risk_issue_management
-        - change_control
-        - pm_core
-  updated_project_state: object
-  monitoring_notes: string
-```
+The output must be a Markdown document following this structure:
+
+# Output: Monitoring & Control
+
+## Project Health
+- **Status**: green | yellow | red
+- **Rationale**: [Clear explanation]
+
+## Deviations & Forecast
+- **Deviations**: [Description] (Area: scope|timeline|effort|quality|assumptions, Severity: low|medium|high)
+- **Forecast**: [Indicative projection] (Confidence: low|medium|high)
+
+## Alerts & Next Steps
+- **Alert**: [Message] (Urgency: low|medium|high)
+- **Recommended Next Skill**: [Skill Name]
+
+## Updated Project State
+[Full updated Markdown document]
+
+## Notes
+[AI observations and guidance]
 
 Health model (simple and honest)
 - Green: milestones aligned, assumptions valid, no relevant deviations
@@ -85,79 +81,54 @@ Forecast rules (golden rule)
   like "If current conditions persist, ..." Avoid exact dates, promises, or
   commitments.
 
-Fields this skill may modify in project_state
-- Allowed writes: `milestones` (status only), `meta.project_health`,
-  `meta.last_monitoring_review`.
-- Must NOT modify: `plan_high_level`, `scope`, `objectives`, `risks`, `issues`.
-
-Guardrails (non-negotiable)
-1. Base assessments only on available evidence; separate facts from perception.
-2. Detect progressive degradation; do not normalize deviations.
-3. Emit clear alerts and recommend the next skill to handle the issue.
-4. Avoid alarmism: quantify severity and rationale.
-5. Maintain traceability (timestamps, data sources) for each signal.
-
 Skill prompt (use this when invoking the skill)
 ```
 You are a Monitoring & Control skill for consulting projects.
 
-Your task is to continuously assess project status by comparing the agreed
-high-level plan with the latest available updates.
+Your task is to assess project status by comparing the project_state (Markdown)
+with the latest available updates, and return a response following the
+"# Output: Monitoring & Control" Markdown format.
 
 You must:
-- Compare planned vs actual progress
-- Detect deviations in timeline, effort, scope signals, quality, or assumptions
-- Evaluate overall project health (green/yellow/red)
-- Generate an indicative forecast based on current trajectory
-- Emit early alerts when deviations or risks emerge
-- Recommend the appropriate next skill for escalation
+- Compare planned vs actual progress.
+- Detect deviations and evaluate overall project health (green/yellow/red).
+- Generate a conservative forecast based on current trajectory.
+- Emit early alerts and recommend the next skill for escalation.
+- Update milestone statuses in the project_state Markdown.
 
 You must NOT:
-- Change objectives, scope, or the high-level plan
-- Resolve risks or approve changes
-- Re-plan the project
-- Make commitments or promises
-
-Favor early detection, conservative forecasting, and clarity over optimism.
+- Change objectives, scope, or high-level plan details.
+- Resolve risks or approve changes.
 ```
 
 Example (realistic)
 
-Input
-```yaml
-latest_updates:
-  - "Stakeholder validation sessions delayed two weeks"
-  - "Team reports slower progress due to unclear requirements"
-```
+**Input**
+- project_state: "# Project: Migration... [Status: On Track]"
+- latest_updates: "Stakeholder sessions delayed two weeks; team reports slower progress..."
 
-Output (summarized)
-```yaml
-project_health:
-  status: yellow
-  rationale: >
-    Validation delays and requirement ambiguity are impacting progress,
-    though no milestones are yet fully missed.
+**Output**
+# Output: Monitoring & Control
 
-  - description: Stakeholder validations delayed
-    area: timeline
-    severity: medium
-  - description: Requirements clarity lower than expected
-    area: assumptions
-    severity: medium
+## Project Health
+- **Status**: yellow
+- **Rationale**: Validation delays and requirement ambiguity are impacting progress.
 
-forecast:
-  description: >
-    If current conditions persist, next milestone is likely to be delayed.
-  confidence: medium
+## Deviations & Forecast
+- **Deviations**: Stakeholder validations delayed (Area: timeline, Severity: medium)
+- **Forecast**: If current conditions persist, next milestone is likely to be delayed. (Confidence: medium)
 
-alerts:
-  - message: Increasing risk of milestone slippage
-    urgency: medium
-    recommended_next_skill: risk_issue_management
+## Alerts & Next Steps
+- **Alert**: Increasing risk of milestone slippage (Urgency: medium)
+- **Recommended Next Skill**: risk_issue_management
 
-monitoring_notes: >
-  Early intervention recommended to avoid escalation.
-```
+## Updated Project State
+# Project: Migration
+...
+- Phase 1 Complete (2024-01-01): Inventory done. [Status: Yellow - Delayed]
+
+## Notes
+Early intervention recommended.
 
 Interaction with PM Core Agent
 - Run periodically or when `latest_updates` change. When alerts are emitted,

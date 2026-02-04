@@ -40,112 +40,79 @@ Role: what this skill does and does not do
   - Perform detailed replanning
 
 Inputs
-```yaml
-inputs:
-  project_state: object
-  change_request: object
-```
+- **project_state**: A Markdown document following the template in `pm-core-agent.md`.
+- **change_request**: Informal or structured request (e.g., "Client asked for X").
 
-`change_request` may be an informal sentence or a structured object. Examples:
-- "Client asked for X"
-- "Can we add Y without moving dates?"
+`change_request` may be an informal sentence or a structured object.
 
 Outputs (contract)
-```yaml
-outputs:
-  change_assessment:
-    classification: in_scope | out_of_scope | unclear
-    rationale: string
-  impact_analysis:
-    scope: low | medium | high
-    timeline: low | medium | high
-    effort: low | medium | high
-    quality: low | medium | high
-    risk: low | medium | high
-  response_options:
-    - option: string
-      tradeoffs: string
-  recommendation:
-    decision: accept | reject | defer | escalate
-    justification: string
-  updated_project_state: object
-  notes: string
-```
+The output must be a Markdown document following this structure:
 
-Classification rules
-- In-scope: does not alter objectives, introduces no new deliverables, and
-  has low/absorbable impact.
-- Unclear: ambiguous, under-specified, or has risk of scope creep; needs
-  clarification and impact analysis.
-- Out-of-scope: introduces new deliverables, changes objectives, or has
-  medium/high impact on time or effort.
+# Output: Change Control / Scope Management
 
-Fields this skill may modify in project_state
-- Allowed writes: `scope` (only when change is approved), `decisions_log`,
-  `risks` (if new risks emerge), `meta.current_phase`, `meta.project_health`.
-- Must NOT modify: `objectives` (except via formal escalation process).
+## Assessment & Impact
+- **Classification**: in_scope | out_of_scope | unclear
+- **Rationale**: [Clear explanation]
+- **Impact Analysis**: [Scope/Timeline/Effort/Quality/Risk impact levels]
 
-Guardrails (non-negotiable)
-1. Treat every change as explicit; never assume implied approval.
-2. Avoid silent acceptance: always show impact even if uncomfortable.
-3. Offer alternatives and trade-offs, not only rejections.
-4. Escalate when impact is medium or high.
-5. Maintain traceability: who requested, when, what changed, and why.
+## Response & Recommendation
+- **Response Options**: [Description of options and trade-offs]
+- **Recommendation**: accept | reject | defer | escalate (Justification: [Text])
+
+## Updated Project State
+[Full updated Markdown document]
+
+## Notes
+[AI observations and guidance]
 
 Skill prompt (use this prompt when invoking the skill)
 ```
 You are a Change Control and Scope Management skill for consulting projects.
 
-Your task is to assess and manage change requests based on the current project state.
+Your task is to assess and manage change requests based on the project_state (Markdown),
+and return a response following the "# Output: Change Control / Scope Management"
+Markdown format.
 
 You must:
-- Evaluate whether a request constitutes a scope change
-- Classify the request as in-scope, out-of-scope, or unclear
-- Analyze the potential impact on scope, timeline, effort, quality, and risk
-- Propose clear response options with trade-offs
-- Provide a recommendation with justification
-- Update the project state only if a change is approved
+- Evaluate whether a request constitutes a scope change.
+- Classify the request and analyze the potential impact.
+- Propose clear response options with trade-offs.
+- Provide a recommendation with justification.
+- Update the project_state Markdown if a change is approved.
 
 You must NOT:
-- Execute changes
-- Negotiate directly with stakeholders
-- Change project objectives without escalation
-- Minimize impact for convenience
-
-Favor transparency, control, and long-term trust over short-term accommodation.
+- Execute changes or negotiate directly with stakeholders.
+- Minimize impact for convenience.
 ```
 
 Example (quick)
 
-Input
-```yaml
-change_request:
-  description: "Client requested adding an additional dashboard for executives"
-```
+**Input**
+- project_state: "# Project: Migration... ## Scope ### In Scope - Data ingestion."
+- change_request: "Client requested adding an additional dashboard for executives"
 
-Output (summarized)
-```yaml
-change_assessment:
-  classification: out_of_scope
-  rationale: Additional dashboard introduces a new deliverable not included in original scope
+**Output**
+# Output: Change Control / Scope Management
 
-impact_analysis:
-  scope: high
-  timeline: medium
-  effort: medium
-  quality: low
-  risk: medium
+## Assessment & Impact
+- **Classification**: out_of_scope
+- **Rationale**: Additional dashboard introduces a new deliverable.
+- **Impact Analysis**: Scope: high, Timeline: medium, Effort: medium, Quality: low, Risk: medium.
 
-response_options:
-  - option: Include dashboard as a paid change request
-    tradeoffs: Extends delivery timeline and increases effort
-  - option: Replace an existing deliverable
-    tradeoffs: Maintains timeline but reduces original scope
+## Response & Recommendation
+- **Response Options**: Include as paid change (extends timeline) or replace an existing deliverable.
+- **Recommendation**: escalate (Justification: New deliverable requires client decision on trade-offs).
 
-recommendation:
-  decision: escalate
-  justification: New deliverable requires client decision on trade-offs
-```
+## Updated Project State
+# Project: Migration
+...
+## Decisions Log
+| Date | Decision | Rationale | Approved By |
+|------|----------|-----------|-------------|
+| 2024-01-01 | Dashboard request | Identified as out-of-scope. | PM Core |
+
+## Notes
+New deliverable identified.
 
 Interaction with PM Core Agent
 - This skill is invoked when a change request is received or a user asks
