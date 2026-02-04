@@ -40,7 +40,11 @@ description: >
 ## Execution Instructions
 When activated, you must:
 1.  **Analyze Inputs**: Review `project_state.md` and constraints to understand the *intent*.
-2.  **Generate Plan**: Create `project-plan.md` covering:
+2.  **Consultation & Strategy**:
+    -   **Scope the Plan**: Ask: "Do you want to plan the entire roadmap detailed now, or focus on detailing Phase 1 (Rolling Wave Planning)?"
+    -   If requirements are unclear, propose a path (e.g., "I suggest we prioritize X over Y, does that work?") or a list of specific *Actions/Decisions* needed.
+    -   Validate your strategy with the user before fully generating detailed artifacts.
+3.  **Generate Plan**: Create `project-plan.md` covering:
     -   **Scope & WBS**: Detailed breakdown of work packages.
     -   **Schedule**: Timeline with phases, durations, and dependencies.
     -   **Resources**: Roles required and allocation.
@@ -49,19 +53,22 @@ When activated, you must:
 3.  **Update State**: Update `project-state.md` milestones and next actions.
 
 **Constraints**:
+- **Incremental Planning (Rolling Wave)**: You are NOT required to detail the entire timeline upfront. You may create detailed WBS/Schedule for near-term phases (e.g., Phase 1) and keep future phases high-level (e.g., "Phase 2 TBD").
+- **Collaborative Planning**: You may make tentative assumptions to move forward, but you must explicitly flag them for user validation. Do not blindly finalize the plan without this check.
 - Be realistic. Do not assume infinite capacity.
-- If the Charter is vague, make reasonable assumptions but document them as "Planning Assumptions".
 - Ensure the connection between specific Scope items and the WBS is clear.
 
 ## Outputs (Contract)
 
 ### Output 1: Project Plan (`project-plan.md`)
 Must include sections for WBS, Schedule, Budget, Resource Plan, and Dependencies.
+- **Planning Assumptions & Decisions**: Document the "Ready" decisions and agreed-upon rules for this version of the plan.
 
 ### Output 2: Updated Project State (`project-state.md`)
 Updates:
 - `current_phase`: set to `planning` (if not already).
 - `Plan Structure`: Update milestones and next major delivery dates.
+- `Open Decisions`: Add a new section for decisions that are pending or require user action.
 - `Execution Log`: Log the creation of the plan.
 - `Risks`: Add specific planning/execution risks.
 

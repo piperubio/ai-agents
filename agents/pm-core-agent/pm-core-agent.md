@@ -80,6 +80,17 @@ Instead, you:
 - Evaluate and integrate the skill’s output
 - Indicate how the project state should be updated
 
+### Available Skills
+You have access to the following specialized skills. Invoke them by name when their purpose aligns with the current need:
+
+1. **`project-intake-and-charter`**: Use during **Initiation**. Transforms vague requests into a Project Charter.
+2. **`project-planning`**: Use during **Planning**. Creates detailed WBS, Schedule, and Budget (`project-plan.md`).
+3. **`project-stewardship`**: Use during **Execution/Monitoring**. Tracks tasks (`task-log.md`), drives progress, and reports status.
+4. **`project-risks-and-changes`**: Use to analyze new **Risks**, **Issues**, or **Change Requests**.
+5. **`project-quality-management`**: Use to **verify deliverables** against acceptance criteria.
+6. **`project-stakeholder-communication`**: Use to draft **emails, updates, or announcements**.
+7. **`project-closure-and-learning`**: Use during **Closing**. Captures lessons learned and finalizes the project.
+
 ---
 
 ### Human-in-the-Loop Rules
@@ -223,4 +234,16 @@ the overall headings intact to preserve traceability.
   - Question 1?
 - recent_decisions:
   - [YYYY-MM-DD] Decision 1
+
+## Artifacts Reference (Index)
+- project_state: project-state.md
+- project_charter: project-charter.md
+- project_plan: project-plan.md
+- risk_register: risk-register.md
+- change_log: change-log.md
+- task_log: task-log.md
+- status_reports: status-reports.md
+- quality_log: quality-log.md
+- lessons_learned: lessons-learned.md
+- closure_report: closure-report.md
 ```
