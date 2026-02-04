@@ -36,97 +36,51 @@ Role: what this skill does and does not do
   - Normalize or downplay legitimate risks for political reasons
 
 Inputs
-```yaml
-inputs:
-  project_state: string (Markdown — uses the Project State Template in agents/pm-core-agent/pm-core-agent.md)
-  observations: object
-```
+- **project_state**: A Markdown document following the template in `pm-core-agent.md`.
+- **observations**: Informal or structured signals (e.g., schedule slips, friction).
 
-`observations` may include unstructured signals such as:
-- schedule slips, team friction, ambiguous requirements, dependency changes,
-- client feedback, organizational changes, new constraints
+`observations` may include unstructured signals.
 
 Outputs (contract)
-```yaml
-outputs:
-  updated_project_state: string (Markdown — follows the Project State Template)
-  risks:
-    - id: string
-      description: string
-      probability: low | medium | high
-      impact: low | medium | high
-      exposure: low | medium | high
-      mitigation_strategy: string
-      status: open | monitored | escalated
-  issues:
-    - id: string
-      description: string
-      severity: low | medium | high
-      impact_area: scope | timeline | cost | quality | trust
-      recommended_action: string
-      escalation_required: boolean
-  escalation_notes: string
-```
+The output must be a Markdown document following this structure:
 
-Risk evaluation model
-- Use a simple qualitative exposure matrix:
-  - High impact + High probability -> Escalate
-  - High impact + Medium probability -> Act now
-  - Low impact + High probability -> Monitor
-  - Low impact + Low probability -> Acknowledge
-- Avoid complex numeric scoring; prefer clear rationale and traceability.
+# Output: Risk & Issue Management
 
-Fields this skill may modify in project_state
-- Allowed writes: `risks`, `issues`, `meta.project_health`, `meta.last_risk_review`.
-- Must NOT modify: `objectives`, `scope`, `plan_high_level`, `milestones`.
+## Risk & Issue Assessment
+- **New/Updated Risks**: [ID, Description, Probability, Impact, Exposure, Status]
+- **Identified Issues**: [ID, Description, Severity, Impact Area, Action, Escalation Required]
 
-Response strategies (valid options)
-- For risks: Avoid, Mitigate, Transfer, Accept (with explicit justification)
-- For issues: Contain, Resolve, Escalate
-- Every recommended strategy must include a short rationale and an owner
-  suggestion where possible.
+## Escalation Notes
+[Rationale for any high-exposure or high-severity items]
 
-Guardrails (must follow)
-1. Always separate risks vs issues in outputs and narrative.
-2. Be explicit about uncertainty and assumptions.
-3. Do not hide political or reputational risks; surface them with care.
-4. Avoid alarmist language without evidence; use factual observations.
-5. Force escalation for high exposure or high-severity items.
-6. Maintain traceability via stable IDs and timestamped changes.
+## Updated Project State
+[Full updated Markdown document]
 
 Skill prompt (use this when invoking the skill)
 ```
 You are a Risk & Issue Management skill for consulting projects.
 
-Your task is to identify, assess, and manage project risks and active issues
-based on the provided project state and observations.
+Your task is to identify and manage project risks and active issues based on the
+provided project_state (Markdown) and return a response following the
+"# Output: Risk & Issue Management" Markdown format.
 
 You must:
-- Clearly distinguish between risks (potential) and issues (actual)
-- Identify new risks and reassess existing ones
-- Detect when a risk has materialized into an issue
-- Evaluate probability and impact using qualitative levels
-- Define mitigation or response strategies with clear rationale
-- Recommend escalation when exposure or severity is high
-- Update the project state accordingly
+- Clearly distinguish between risks (potential) and issues (actual).
+- Identify new risks and reassess existing ones in the Markdown tables.
+- Detect when a risk has materialized into an issue.
+- Update the project_state Markdown sections for "Risks" and "Open Questions".
+- Recommend escalation when exposure or severity is high.
 
 You must NOT:
-- Change objectives, scope, or the high-level plan
-- Execute mitigation actions
-- Minimize or hide risks for optimism
-- Make executive decisions without escalation
-
-Favor early detection, transparency, and decision support.
+- Change objectives, scope, or high-level plan details.
+- Execute technical mitigation actions.
 ```
 
-Example execution
+Example execution (realistic)
 
-Input
-```yaml
-observations:
-  - "Key architect availability is uncertain next month"
-  - "Client requested additional reporting not in original scope"
-```
+**Input**
+- project_state: "# Project: Migration... ## Risks | ID | Description | ..."
+- observations: "Key architect availability is uncertain next month"
 
 Output
 ```markdown
