@@ -119,8 +119,8 @@ state. Skills receive and must return `project_state` as a Markdown string
 following this structure. Edit only the sections that need to change and keep
 the overall headings intact to preserve traceability.
 
-```
-## Meta
+```markdown
+## Project
 - project_id: <id>
 - name: <project name>
 - type: software | data | cloud
