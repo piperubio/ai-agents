@@ -34,14 +34,14 @@ Scope: What this skill does and does not do
 Inputs (OpenCode-friendly)
 ```yaml
 inputs:
-  project_state: object
+  project_state: string (Markdown — uses the Project State Template in agents/pm-core-agent/pm-core-agent.md)
   planning_parameters?: object  # optional preferences (e.g., preferred cadence)
 ```
 
 Outputs (contract)
 ```yaml
 outputs:
-  updated_project_state: object
+  updated_project_state: string (Markdown — follows the Project State Template)
   plan_high_level:
     phases:
       - name: string
@@ -97,16 +97,31 @@ Example execution (based on intake example)
 
 Input (derived from intake)
 ```yaml
-project_state:
-  meta:
-    name: Customer Data Platform Migration
-    current_phase: intake
-  objectives:
-    problem_statement: "Current data platform does not support timely and
-      reliable reporting"
-    business_objectives: ["Improve data freshness", "Increase stakeholder trust"]
-  scope: {...}
-  stakeholders: [...]
+project_state: |
+  ## Meta
+  - name: Customer Data Platform Migration
+  - type: data
+  - client: ACME Corp
+  - current_phase: intake
+  - status: active
+
+  ## Objectives
+  - problem_statement: >
+    Current data platform does not support timely and reliable reporting
+    causing low trust in analytics and delayed decision-making.
+  - business_objectives:
+    - Improve data freshness
+    - Increase stakeholder trust
+
+  ## Scope
+  - in_scope:
+    - Assessment of current data platform
+    - Design of target data architecture
+
+  ## Stakeholders
+  - sponsor:
+    - name: ACME Sponsor
+    - role: Executive Sponsor
 ```
 
 Output (summarized)

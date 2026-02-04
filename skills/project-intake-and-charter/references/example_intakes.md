@@ -8,12 +8,12 @@ manual validation.
 
 Input
 ```yaml
-project_state:
-  meta:
-    name: Customer Data Platform Migration
-    type: data
-    client: ACME Corp
-    current_phase: intake
+project_state: |
+  ## Meta
+  - name: Customer Data Platform Migration
+  - type: data
+  - client: ACME Corp
+  - current_phase: intake
 
 user_input: >
   We want to migrate our current data platform to something more modern
@@ -30,12 +30,12 @@ Expected highlights
 
 Input
 ```yaml
-project_state:
-  meta:
-    name: Mobile Push Notifications
-    type: product
-    client: BetaApps
-    current_phase: intake
+project_state: |
+  ## Meta
+  - name: Mobile Push Notifications
+  - type: product
+  - client: BetaApps
+  - current_phase: intake
 
 user_input: >
   We need push notifications for new messages. PM asked to make it opt-in.
@@ -52,12 +52,12 @@ Expected highlights
 
 Input
 ```yaml
-project_state:
-  meta:
-    name: Campaign Analytics Dashboard
-    type: analytics
-    client: RetailCo
-    current_phase: intake
+project_state: |
+  ## Meta
+  - name: Campaign Analytics Dashboard
+  - type: analytics
+  - client: RetailCo
+  - current_phase: intake
 
 user_input: >
   Marketing needs a dashboard to measure channel ROI for the upcoming

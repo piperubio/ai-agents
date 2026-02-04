@@ -43,7 +43,7 @@ Role: what this skill does and does not do
 Inputs
 ```yaml
 inputs:
-  project_state: object
+  project_state: string (Markdown — uses the Project State Template in agents/pm-core-agent/pm-core-agent.md)
   communication_context:
     audience: executive | client | internal | steering | mixed
     purpose: status_update | risk_alert | decision_request | change_discussion | alignment

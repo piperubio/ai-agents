@@ -42,7 +42,7 @@ Role: what this skill does and does not do
 Inputs
 ```yaml
 inputs:
-  project_state: object
+  project_state: string (Markdown — uses the Project State Template in agents/pm-core-agent/pm-core-agent.md)
   change_request: object
 ```
 
@@ -68,7 +68,7 @@ outputs:
   recommendation:
     decision: accept | reject | defer | escalate
     justification: string
-  updated_project_state: object
+  updated_project_state: string (Markdown — follows the Project State Template)
   notes: string
 ```
 

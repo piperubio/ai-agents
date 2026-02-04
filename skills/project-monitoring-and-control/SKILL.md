@@ -42,7 +42,7 @@ Role: what this skill does and does not do
 Inputs
 ```yaml
 inputs:
-  project_state: object
+  project_state: string (Markdown — uses the Project State Template in agents/pm-core-agent/pm-core-agent.md)
   latest_updates: object
 ```
 
@@ -69,7 +69,7 @@ outputs:
         - risk_issue_management
         - change_control
         - pm_core
-  updated_project_state: object
+  updated_project_state: string (Markdown — follows the Project State Template)
   monitoring_notes: string
 ```
 

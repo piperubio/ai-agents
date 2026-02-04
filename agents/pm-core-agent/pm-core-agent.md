@@ -36,9 +36,10 @@ not to simply make the project move forward.
 
 ### Project Context (Injected State)
 In every interaction, you will receive the current project context as a
-structured object called `project_state`.
+Markdown string called `project_state`.
 
-`project_state` is the single source of truth.
+`project_state` is the single source of truth and follows the "Project State
+Template" defined below.
 
 You must:
 - Base all reasoning and recommendations on `project_state`
@@ -111,81 +112,86 @@ project lifecycle.
 If something is unclear, risky, or inconsistent, you must surface it.
 
 
-## Project State Schema
+## Project State Template
 
-```yaml
-project_state:
-  meta:
-    project_id:
-    name:
-    type: software | data | cloud
-    client:
-    start_date:
-    current_phase: intake | planning | execution | monitoring | closing
-    status: active | paused | closed
+Below is a fillable Markdown template representing the canonical project
+state. Skills receive and must return `project_state` as a Markdown string
+following this structure. Edit only the sections that need to change and keep
+the overall headings intact to preserve traceability.
 
-  objectives:
-    problem_statement:
-    business_objectives:
-      - 
-    success_criteria:
-      -
+```
+## Meta
+- project_id: <id>
+- name: <project name>
+- type: software | data | cloud
+- client: <client>
+- start_date: YYYY-MM-DD
+- current_phase: intake | planning | execution | monitoring | closing
+- status: active | paused | closed
 
-  scope:
-    in_scope:
-      -
-    out_of_scope:
-      -
-    assumptions:
-      -
-    constraints:
-      -
+## Objectives
+- problem_statement: >
+  Short description of the problem the project addresses.
+- business_objectives:
+  - Objective 1
+- success_criteria:
+  - Criterion 1
 
-  stakeholders:
-    sponsor:
-      name:
-      role:
-      influence: high | medium | low
-    key_stakeholders:
-      - name:
-        role:
-        influence: high | medium | low
+## Scope
+- in_scope:
+  - Item A
+- out_of_scope:
+  - Item B
+- assumptions:
+  - Assumption X
+- constraints:
+  - Constraint Y
 
-  plan_high_level:
-    phases:
-      - name:
-        description:
-        deliverables:
-          -
-        dependencies:
-          -
-        estimated_effort: xs | s | m | l | xl
-    milestones:
-      - name:
-        expected_date:
-        criteria:
+## Stakeholders
+- sponsor:
+  - name: <name>
+  - role: <role>
+  - influence: high | medium | low
+- key_stakeholders:
+  - name: <name>
+    role: <role>
+    influence: high | medium | low
 
-  risks:
-    - id:
-      description:
-      probability: low | medium | high
-      impact: low | medium | high
-      mitigation:
-      status: open | mitigated | accepted
+## Plan (high_level)
+- phases:
+  - name: Phase 1
+    description: Short summary
+    deliverables:
+      - Deliverable A
+    dependencies:
+      - Phase 0
+    estimated_effort: xs | s | m | l | xl
+- milestones:
+  - name: Milestone 1
+    expected_date: YYYY-MM-DD
+    criteria: Acceptance criteria
 
-  decisions_log:
-    - date:
-      decision:
-      rationale:
-      approved_by:
+## Risks
+- id: R-001
+  description: Description of the risk
+  probability: low | medium | high
+  impact: low | medium | high
+  mitigation: Proposed mitigation
+  status: open | mitigated | accepted
 
-  open_questions:
-    - question:
-      impact: low | medium | high
+## Decisions Log
+- date: YYYY-MM-DD
+  decision: Decision text
+  rationale: Reasoning for the decision
+  approved_by: Name
 
-  communication:
-    cadence:
-      status_update: weekly | biweekly | monthly
-    last_update:
-    notes:
+## Open Questions
+- question: Description of open question
+  impact: low | medium | high
+
+## Communication
+- cadence:
+  - status_update: weekly | biweekly | monthly
+- last_update: YYYY-MM-DD
+- notes: Freeform notes
 ```
