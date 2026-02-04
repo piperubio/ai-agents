@@ -124,28 +124,29 @@ change_request:
 ```
 
 Output (summarized)
-```yaml
-change_assessment:
-  classification: out_of_scope
-  rationale: Additional dashboard introduces a new deliverable not included in original scope
+```markdown
+## Change Assessment
+- classification: out_of_scope
+- rationale: Additional dashboard introduces a new deliverable not included in original scope
 
-impact_analysis:
-  scope: high
-  timeline: medium
-  effort: medium
-  quality: low
-  risk: medium
+## Impact Analysis
+- scope: high
+- timeline: medium
+- effort: medium
+- quality: low
+- risk: medium
 
-response_options:
-  - option: Include dashboard as a paid change request
-    tradeoffs: Extends delivery timeline and increases effort
-  - option: Replace an existing deliverable
-    tradeoffs: Maintains timeline but reduces original scope
+## Response Options
+- option: Include dashboard as a paid change request
+  tradeoffs: Extends delivery timeline and increases effort
+- option: Replace an existing deliverable
+  tradeoffs: Maintains timeline but reduces original scope
 
-recommendation:
-  decision: escalate
-  justification: New deliverable requires client decision on trade-offs
+## Recommendation
+- decision: escalate
+- justification: New deliverable requires client decision on trade-offs
 ```
+
 
 Interaction with PM Core Agent
 - This skill is invoked when a change request is received or a user asks

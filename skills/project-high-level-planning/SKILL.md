@@ -125,31 +125,39 @@ project_state: |
 ```
 
 Output (summarized)
-```yaml
-plan_high_level:
-  phases:
-    - name: Assessment
-      goals: Inventory sources, map pipelines, identify quick wins
-      milestones: ["Data sources inventory complete", "Initial QA report"]
-      acceptance_criteria: ["Inventory covers >90% of BI reports"]
-    - name: Target Architecture & Prioritization
-      goals: Define target architecture and migration phasing
-      milestones: ["Target architecture approved", "MVP scope defined"]
-      acceptance_criteria: ["MVP covers priority reports"]
-    - name: Pilot & Handoff
-      goals: Implement pilot migration for prioritized sources
-      milestones: ["Pilot implemented", "Operational handoff"]
-      acceptance_criteria: ["Pilot meets SLA and quality thresholds"]
-  estimated_size: M
-  duration_range: { min_weeks: 8, max_weeks: 20 }
+```markdown
+## Plan High Level
+- phases:
+  - name: Assessment
+    goals: Inventory sources, map pipelines, identify quick wins
+    milestones:
+      - Data sources inventory complete
+      - Initial QA report
+    acceptance_criteria:
+      - Inventory covers >90% of BI reports
+  - name: Target Architecture & Prioritization
+    goals: Define target architecture and migration phasing
+    milestones:
+      - Target architecture approved
+      - MVP scope defined
+    acceptance_criteria:
+      - MVP covers priority reports
+  - name: Pilot & Handoff
+    goals: Implement pilot migration for prioritized sources
+    milestones:
+      - Pilot implemented
+      - Operational handoff
+    acceptance_criteria:
+      - Pilot meets SLA and quality thresholds
+- estimated_size: M
+- duration_range: min_weeks=8, max_weeks=20
 
-clarifying_questions:
-  - question: "Which data sources must be in phase 1?"
-    impact: high
+## Clarifying Questions
+- question: Which data sources must be in phase 1?
+  impact: high
 
-notes: >
-  Estimates assume existing data sources are accessible and client can allocate
-  one dedicated data engineer part-time during Assessment.
+## Notes
+Estimates assume existing data sources are accessible and client can allocate one dedicated data engineer part-time during Assessment.
 ```
 
 Interaction with the PM Core Agent

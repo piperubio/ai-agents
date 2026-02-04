@@ -131,13 +131,11 @@ latest_updates:
 ```
 
 Output (summarized)
-```yaml
-project_health:
-  status: yellow
-  rationale: >
-    Validation delays and requirement ambiguity are impacting progress,
-    though no milestones are yet fully missed.
-
+```markdown
+## Project Health
+- status: yellow
+- rationale: Validation delays and requirement ambiguity are impacting progress, though no milestones are yet fully missed.
+- deviations:
   - description: Stakeholder validations delayed
     area: timeline
     severity: medium
@@ -145,19 +143,19 @@ project_health:
     area: assumptions
     severity: medium
 
-forecast:
-  description: >
-    If current conditions persist, next milestone is likely to be delayed.
-  confidence: medium
+## Forecast
+- description: If current conditions persist, next milestone is likely to be delayed.
+- confidence: medium
 
-alerts:
-  - message: Increasing risk of milestone slippage
-    urgency: medium
-    recommended_next_skill: risk_issue_management
+## Alerts
+- message: Increasing risk of milestone slippage
+  urgency: medium
+  recommended_next_skill: risk_issue_management
 
-monitoring_notes: >
-  Early intervention recommended to avoid escalation.
+## Monitoring Notes
+Early intervention recommended to avoid escalation.
 ```
+
 
 Interaction with PM Core Agent
 - Run periodically or when `latest_updates` change. When alerts are emitted,

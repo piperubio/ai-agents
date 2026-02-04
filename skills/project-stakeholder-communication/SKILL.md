@@ -124,28 +124,29 @@ communication_context:
 ```
 
 Output (summarized)
-```yaml
-communication_plan:
-  audience: Executive Sponsor
-  objective: Secure decision on scope adjustment due to new reporting request
-  tone: executive
-  key_messages:
-    - Additional reporting request introduces new deliverables
-    - Current plan does not absorb this change without impact
-    - Clear options are available
-  risks_to_address:
-    - Scope creep affecting timeline and quality
-  decisions_or_inputs_needed:
-    - Confirm whether to approve change with timeline adjustment
-  next_steps:
-    - Align on preferred option
-    - Formalize decision
+```markdown
+## Communication Plan
+- audience: Executive Sponsor
+- objective: Secure decision on scope adjustment due to new reporting request
+- tone: executive
+- key_messages:
+  - Additional reporting request introduces new deliverables
+  - Current plan does not absorb this change without impact
+  - Clear options are available
+- risks_to_address:
+  - Scope creep affecting timeline and quality
+- decisions_or_inputs_needed:
+  - Confirm whether to approve change with timeline adjustment
+- next_steps:
+  - Align on preferred option
+  - Formalize decision
 
-draft_message: >
-  We have received a request to add an additional executive dashboard.
-  This introduces a new deliverable outside the original scope.
-  To proceed transparently, we see two viable options...
+## Draft Message
+We have received a request to add an additional executive dashboard.
+This introduces a new deliverable outside the original scope.
+To proceed transparently, we see two viable options...
 ```
+
 
 Interaction with PM Core Agent
 - The PM Core Agent invokes this skill to prepare messages before human review

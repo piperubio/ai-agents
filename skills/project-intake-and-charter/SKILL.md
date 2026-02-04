@@ -124,53 +124,50 @@ user_input: >
 ```
 
 Output (summarized)
-```yaml
-updated_project_state: |
-  ## Objectives
-  - problem_statement: >
-    Current data platform does not support timely and reliable reporting,
-    causing low trust in analytics and delayed decision-making.
-  - business_objectives:
-    - Improve data freshness and reliability
-    - Increase stakeholder trust in analytics
-  - success_criteria:
-    - Core dashboards refresh within agreed SLA
-    - Reduction in data quality incidents
+```markdown
+## Objectives
+- problem_statement: Current data platform does not support timely and reliable reporting, causing low trust in analytics and delayed decision-making.
+- business_objectives:
+  - Improve data freshness and reliability
+  - Increase stakeholder trust in analytics
+- success_criteria:
+  - Core dashboards refresh within agreed SLA
+  - Reduction in data quality incidents
 
-  ## Scope
-  - in_scope:
-    - Assessment of current data platform
-    - Design of target data architecture
-  - out_of_scope:
-    - Full implementation of all downstream dashboards
-  - assumptions:
-    - Existing data sources remain unchanged
-  - constraints:
-    - Limited availability of client data engineers
+## Scope
+- in_scope:
+  - Assessment of current data platform
+  - Design of target data architecture
+- out_of_scope:
+  - Full implementation of all downstream dashboards
+- assumptions:
+  - Existing data sources remain unchanged
+- constraints:
+  - Limited availability of client data engineers
 
-  ## Risks
-  - id: R-001
-    description: Data quality issues may be deeper than initially visible
-    probability: medium
-    impact: high
-    status: open
+## Risks
+- id: R-001
+  description: Data quality issues may be deeper than initially visible
+  probability: medium
+  impact: high
+  status: open
 
-  ## Open Questions
-  - question: Which data sources are included in the first migration phase?
-    impact: high
-  - question: What reporting SLAs are expected by the business?
-    impact: medium
+## Open Questions
+- question: Which data sources are included in the first migration phase?
+  impact: high
+- question: What reporting SLAs are expected by the business?
+  impact: medium
 
-clarifying_questions:
-  - question: Which data sources are included in the first migration phase?
-    impact: high
-  - question: What reporting SLAs are expected by the business?
-    impact: medium
+## Clarifying Questions
+- question: Which data sources are included in the first migration phase?
+  impact: high
+- question: What reporting SLAs are expected by the business?
+  impact: medium
 
-notes: >
-  Scope intentionally limited to assessment and design pending clarification
-  on data sources and SLAs.
+## Notes
+Scope intentionally limited to assessment and design pending clarification on data sources and SLAs.
 ```
+
 
 Interaction with the PM Core Agent
 - PM Core Agent detects `meta.current_phase` == `intake` and invokes this

@@ -129,28 +129,29 @@ observations:
 ```
 
 Output
-```yaml
-risks:
-  - id: R-003
-    description: Reduced availability of key architect during critical design phase
-    probability: medium
-    impact: high
-    exposure: high
-    mitigation_strategy: Secure backup resource or adjust timeline
-    status: escalated
+```markdown
+## Risks
+- id: R-003
+  description: Reduced availability of key architect during critical design phase
+  probability: medium
+  impact: high
+  exposure: high
+  mitigation_strategy: Secure backup resource or adjust timeline
+  status: escalated
 
-issues:
-  - id: I-002
-    description: Client requesting additional reporting beyond agreed scope
-    severity: medium
-    impact_area: scope
-    recommended_action: Trigger scope impact analysis and formal change discussion
-    escalation_required: true
+## Issues
+- id: I-002
+  description: Client requesting additional reporting beyond agreed scope
+  severity: medium
+  impact_area: scope
+  recommended_action: Trigger scope impact analysis and formal change discussion
+  escalation_required: true
 
-escalation_notes: >
-  Architect availability risk has high exposure and requires PM intervention.
-  Scope-related issue requires client alignment before proceeding.
+## Escalation Notes
+Architect availability risk has high exposure and requires PM intervention.
+Scope-related issue requires client alignment before proceeding.
 ```
+
 
 Interaction with the PM Core Agent
 - Invoke this skill during regular risk reviews or when new observations arrive.
