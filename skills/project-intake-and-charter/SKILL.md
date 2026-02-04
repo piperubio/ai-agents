@@ -3,12 +3,12 @@ name: project-intake-and-charter
 description: >
   Project Intake & Charter: transform an ambiguous project request into a
   clear, structured project foundation for consulting engagements. Use when a
-  project is in the intake phase or when a PM needs to clarify objectives,
+  project is in the **Initiation** phase or when a PM needs to clarify objectives,
   scope, stakeholders, assumptions, initial risks and open questions without
   performing detailed planning or estimations.
 ---
 
-# Project Intake & Charter
+# Project Intake & Charter (Initiation Phase)
 
 Purpose
 - Transform an ambiguous project request into a clear, structured project
@@ -33,140 +33,76 @@ Scope: What this skill does and does not do
   - Make final business decisions or negotiate with stakeholders
   - Send formal external communications
 
-Inputs (OpenCode-friendly)
-- **project_state**: A Markdown document following the template in `pm-core-agent.md`.
+Inputs
+
+- **project_state.md**: A Markdown document following the template in `project-state.md`.
 - **user_input**: Fragmented or ambiguous project request.
 
 Notes
-- `project_state` may be incomplete or partially populated.
+- `project-state.md` may be incomplete or partially populated.
 - `user_input` may be informal, fragmented, or ambiguous.
 - The skill must tolerate ambiguity and avoid inventing facts.
 
 Outputs (contract)
-The output must be a Markdown document following this structure:
+1. **New File**: `project-charter.md` (The human-readable Project Definition).
+2. **Updated File**: `project-state.md` (The operational context).
 
-# Output: Project Intake & Charter
+# Output 1: Project Charter (`project-charter.md`)
+Follows standard Project Charter format:
+- **Project Name & Metadata**
+- **Problem Statement** & **Business Objectives**
+- **Scope** (In/Out)
+- **Key Stakeholders**
+- **High-Level Risks**
+- **Approval Sign-off Section**
 
-## Updated Project State
-[Full updated Markdown document]
+# Output 2: Updated Project State (`project-state.md`)
+Updates specific sections of the state to reflect the new definition:
+- `## Objectives` (Synced from Charter)
+- `## Scope` (Synced from Charter)
+- `## Execution Log`:
+  - `history_summary`: Added "Project Charter created."
+  - `current_action`: "Reviewing Charter with stakeholders."
+  - `next_actions`: "Obtain approval", "Initiate High-Level Planning."
+- `## active_questions`: (If any)
 
-## Clarifying Questions
-- [Question] (Impact: low | medium | high)
-
-## Notes
-[AI observations and guidance]
-
-- `updated_project_state`: only modify or add the specific fields listed in
-  "Fields this skill may write"; do not overwrite unrelated sections.
-- `clarifying_questions`: include only when important information is missing.
-- `notes`: observations and guidance for the PM Core Agent.
-
-Fields this skill may write in project_state
-- Allowed writes: `objectives`, `scope`, `stakeholders`, `risks`,
-  `open_questions`, `meta.current_phase` (only when there is sufficient
-  clarity).
-- Must NOT write or modify: `plan_high_level`, `decisions_log`,
-  `communication`.
+---
 
 Guardrails (must follow)
-1. Do not invent information. When using assumptions, mark them explicitly.
-2. Always separate business objectives from proposed solutions.
-3. Detect scope creep and call it out early.
-4. Escalate (produce clarifying_questions with impact `high`) when missing
-   information would materially affect next-phase decisions.
-5. Prefer clarity over completeness: it is better to be explicit and partial
-   than vague and complete.
+1. **Charter != Plan**: The Charter defines *what* and *why*. It does NOT define *how* (detailed plan) or *when* (schedule).
+2. **State = Brain**: Do not put the full narrative in the state. Put the structural facts needed for decision making.
+3. If information is missing for the Charter, ask Clarifying Questions instead of inventing it.
 
 Skill prompt (use this prompt when invoking the skill)
 ```
-You are a Project Intake & Charter skill for consulting projects.
+You are a Project Intake & Charter skill.
 
-Your task is to analyze the provided project_state (Markdown) and user input, and
-return a response following the "# Output: Project Intake & Charter" Markdown format.
+Task:
+1. Analyze `project_state.md` and `user_input`.
+2. Generate a valid `project-charter.md` file content defined as the Project Definition (Not a Plan).
+3. Generate the update for `project-state.md` populating Objectives, Scope, and the Execution Log.
 
-You must:
-- Update the project_state by filling in Metadata, Objectives, Scope, Stakeholders, and Risks.
-- Clarify the real problem being solved.
-- Identify business objectives and measurable success criteria.
-- Define what is in scope and out of scope.
-- Surface assumptions and constraints.
-- Detect missing or ambiguous information and formulate clarifying questions.
+Input Constraints:
+- Do NOT create a detailed WBS or Schedule yet. Focus on alignment and definition.
 
-You must NOT:
-- Perform detailed planning or commit to timelines/costs.
-- Assume information not explicitly provided.
+Output Format:
+Provide the content for the two files clearly separated.
 ```
 
 Example execution (realistic)
 
-**Input**
-- project_state: "# Project: Customer Data Platform Migration..."
-- user_input: "We want to migrate our current data platform because reporting is slow..."
-
 **Output**
-# Output: Project Intake & Charter
+File: `project-charter.md` (excerpts)
+> # Project Charter: Data Migration
+> ## Problem
+> Reporting is slow...
+> ## Scope
+> ...
 
-## Updated Project State
-# Project: Customer Data Platform Migration
-## Metadata
-- **Type**: data
-- **Client**: ACME Corp
-- **Current Phase**: intake
-
-## Objectives
-### Problem Statement
-Current data platform does not support timely and reliable reporting.
-
-### Business Objectives
-- Improve data freshness and reliability
-- Increase stakeholder trust in analytics
-
-### Success Criteria
-- Core dashboards refresh within agreed SLA
-- Reduction in data quality incidents
-
-## Scope
-### In Scope
-- Assessment of current data platform
-- Design of target data architecture
-### Out of Scope
-- Full implementation of all downstream dashboards
-### Assumptions
-- Existing data sources remain unchanged
-### Constraints
-- Limited availability of client data engineers
-
-## Risks
-| ID | Description | Probability | Impact | Mitigation | Status |
-|----|-------------|-------------|--------|------------|--------|
-| R1 | Data quality issues may be deeper | medium | high | Deep dive assessment | open |
-
-## Clarifying Questions
-- Which data sources are included in the first migration phase? (Impact: high)
-- What reporting SLAs are expected by the business? (Impact: medium)
-
-## Notes
-Scope intentionally limited to assessment and design pending clarification.
-
-
-Interaction with the PM Core Agent
-- PM Core Agent detects `meta.current_phase` == `intake` and invokes this
-  skill.
-- After execution, PM Core Agent checks `open_questions` and `clarifying_questions`.
-  - If any question has `impact: high` -> escalate to a human PM.
-  - If no high-impact open questions -> advance to planning (or mark
-    `meta.current_phase` = `planning-ready` if appropriate).
-
-Maturity signal
-- A healthy intake reduces uncertainty but does not eliminate it. If the
-  skill returns zero clarifying questions for a real, non-trivial project,
-  treat that as a potential failure mode.
-
-Next steps
-1. Use outputs as the single source of truth for downstream planning.
-2. If satisfied, invoke Skill 2: High-Level Planning using only the
-   returned `updated_project_state`.
-
-Validation and testing
-- Provide three test scenarios: minimal input, partial input, and rich
-  input. Verify that high-impact information gaps produce `clarifying_questions`.
+File: `project-state.md` (updates)
+> ## Objectives
+> ...
+> ## Execution Log
+> - last_action: created project-charter.md
+> - current_action: waiting for user approval of charter
+```
