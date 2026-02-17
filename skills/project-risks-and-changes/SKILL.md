@@ -41,6 +41,9 @@ You must generate or update the following distinct files:
 - **`risk-register.md`**: Detailed log of ALL risks and issues (ID, Description, Probability, Impact, Mitigation, Status).
 - **`change-log.md`**: Detailed log of ALL change requests (ID, Description, Impact Analysis, Decision, Rationale).
 
+New risk handling for approvals:
+- If Owners do not approve a `workplan-and-estimate.md` within 48 h, create risk `R-APPROVAL-001` (Description: Falta de aprobación del Plan de Trabajo y Estimación por parte de Owners en plazo). Mitigation: Escalar a Sponsor, document la escalación y permitir la autorización del Sponsor como alternativa para proceder. Registrar acciones en `task-log.md` y `decision-log.md`.
+
 ### 2. Analysis & Recommendations (For the User/Agent)
 A summary block explaining:
 - **Analysis**: What the signals mean.
