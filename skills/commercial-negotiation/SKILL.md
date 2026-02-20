@@ -25,11 +25,16 @@ Prepare the commercial team for successful negotiations by creating structured p
 
 ## Inputs
 
-- `commercial-proposal.md` — from commercial-proposal-writer
+- `commercial-proposal.md` — from `commercial-proposal-writer` (implementation proposal, Branch A)
+- `discovery-proposal.md` — from `commercial-discovery-proposal` (Discovery service proposal, Branch B)
 - `qualification-scorecard.md` — from commercial-qualification
 - `discovery-notes.md` — from commercial-discovery
 - `commercial-state.md` — pipeline context
 - `user_input` — specific objections received, procurement requirements, competitive intel
+
+**Branch context**: Check the opportunity `branch` and `type` fields in `commercial-state.md`:
+- **Branch A / type: implementation**: Standard implementation negotiation. Apply full playbook.
+- **Branch B / type: discovery_service**: Negotiating the Discovery engagement. The negotiation dynamic is different — you are selling risk reduction, not implementation. Scope flexibility is limited (Discovery deliverables are fixed). Price defense focuses on the cost of proceeding without structured discovery. See `commercial-discovery-proposal/references/negotiation-playbook.md` for Discovery-specific scripts, objection handlers, and closing techniques.
 
 ## Outputs (contract)
 

@@ -1,21 +1,22 @@
-# BANTT Scoring Models Reference
+# BANTTD Scoring Models Reference
 
 ## Table of Contents
 
-1. [BANTT Detailed Rubrics](#bantt-detailed-rubrics)
+1. [BANTTD Detailed Rubrics](#banttd-detailed-rubrics)
 2. [Budget Scoring Guide](#budget-scoring-guide)
 3. [Authority Mapping Guide](#authority-mapping-guide)
 4. [Need Urgency Matrix](#need-urgency-matrix)
 5. [Timeline Assessment](#timeline-assessment)
 6. [Tech-fit Assessment Matrix](#tech-fit-assessment-matrix)
-7. [Deal Size Estimation Guide](#deal-size-estimation-guide)
-8. [Pipeline Stage Exit Criteria](#pipeline-stage-exit-criteria)
-9. [Re-qualification Triggers](#re-qualification-triggers)
-10. [Minimum Engagement Thresholds](#minimum-engagement-thresholds)
+7. [Decision Date Assessment](#decision-date-assessment)
+8. [Deal Size Estimation Guide](#deal-size-estimation-guide)
+9. [Pipeline Stage Exit Criteria](#pipeline-stage-exit-criteria)
+10. [Re-qualification Triggers](#re-qualification-triggers)
+11. [Minimum Engagement Thresholds](#minimum-engagement-thresholds)
 
 ---
 
-## BANTT Detailed Rubrics
+## BANTTD Detailed Rubrics
 
 ### Budget (0-20)
 
@@ -66,6 +67,44 @@
 | 10 | Moderate fit. Can deliver but would need significant ramp-up or learning. | Data engineering is core for us, but their specific tooling (Kafka, Flink) requires team upskilling. |
 | 15 | Strong fit. Aligns with our expertise with minor stretch areas (<20% new). | Data platform build with a small component of ML ops we've done once before. |
 | 20 | Perfect match. Core capabilities, directly relevant case studies, proven delivery. | Cloud migration + API modernization — three similar engagements in portfolio. |
+
+### Decision Date (0-20)
+
+Is there a specific date by which the prospect expects to make a decision? Is it tied to a business event? Is it near-term enough to drive a reliable forecast?
+
+| Score | Criteria | Example |
+|-------|----------|---------|
+| 0 | No decision date. No intent to decide. "We have no timeline for this." | "We are just building a vendor list, no plans to move this year." |
+| 5 | Vague future intent. "Next fiscal year" or "when we get to it." No event driving it. | "Maybe next year if budget is approved." |
+| 10 | Directional but imprecise. "In the next 2-3 quarters." No hard date or event named. | "Probably H2 this year, but nothing is locked in." |
+| 15 | Clear and near-term. "Within this quarter." Specific window, even if no exact date. Internal alignment building. | "We want to decide by end of March. Team is aligned." |
+| 20 | Specific date confirmed, tied to a business event (product launch, compliance deadline, board meeting, budget cycle). | "We need to sign by April 15 — that is when our fiscal year budget expires." |
+
+**Why this dimension matters**: A high-scoring deal on all other dimensions but with no decision date is a pipeline liability. Without a date, urgency is unverifiable, forecasting is unreliable, and deals tend to stall indefinitely.
+
+**Decision date vs. timeline**: Timeline (T) measures urgency to start the work. Decision Date (D) measures when they will choose a vendor. These are related but distinct — a prospect can have high urgency to solve the problem (T = 18) but no clear date for vendor selection (D = 5). Both matter.
+
+#### Decision Date Scoring Signals
+
+| Signal | Score Impact |
+|--------|-------------|
+| Specific calendar date given | 18-20 |
+| Date tied to named business event (board meeting, launch, compliance deadline) | 16-20 |
+| "This quarter" with named month | 14-16 |
+| "This quarter" without specific month | 12-14 |
+| "This year, probably H1/H2" | 8-10 |
+| "Next year" or "next fiscal year" | 4-6 |
+| "When we get to it" or "no particular timeline" | 0-3 |
+
+#### Add 2-3 points if:
+- Multiple stakeholders independently reference the same decision date.
+- Prospect is actively requesting contract/proposal timeline from all vendors.
+- Prospect mentions a budget expiration or allocation deadline.
+
+#### Reduce 2-3 points if:
+- The date has already shifted once in this process.
+- The date is owned by a stakeholder we have not yet met.
+- The date is contingent on another internal initiative completing first.
 
 ---
 
@@ -270,20 +309,20 @@ Value-share or success-fee model:
 
 ## Pipeline Stage Exit Criteria
 
-Define minimum BANTT scores required to advance from each stage.
+Define minimum BANTTD scores required to advance from each stage. Scores are out of 120 (6 dimensions × 0-20).
 
 | Stage | Minimum Total | Required Dimensions | Additional Criteria |
 |-------|--------------|--------------------|--------------------|
-| Lead → Qualified | 40+ | Need >= 10 | Discovery meeting completed |
-| Qualified → Solution Design | 70+ | Budget >= 10, Authority >= 10 | Champion identified |
-| Solution Design → Proposal | 70+ | All dimensions >= 10 | Economic buyer engaged |
-| Proposal → Negotiation | 75+ | Budget >= 15, Timeline >= 10 | Budget confirmed, timeline agreed |
-| Negotiation → Closed Won | 80+ | Authority >= 15, Budget >= 15 | Contract terms agreed |
+| Lead → Qualified | 48+ | Need >= 10 | Qualification meeting completed, P.U.D.T.F >= 22 |
+| Qualified → Solution Design | 84+ | Budget >= 10, Authority >= 10 | Champion identified |
+| Solution Design → Proposal | 84+ | All dimensions >= 10 | Economic buyer engaged |
+| Proposal → Negotiation | 90+ | Budget >= 15, Timeline >= 10, Decision Date >= 10 | Budget confirmed, decision date known |
+| Negotiation → Closed Won | 96+ | Authority >= 15, Budget >= 15 | Contract terms agreed |
 
 ### Stage Regression Rules
 
 - Move opportunity back one stage if any required dimension drops below threshold.
-- Move to Nurture if total score drops below 40 at any stage.
+- Move to Nurture if total score drops below 48 at any stage.
 - Move to Disqualified if any override trigger fires (see Guardrails in SKILL.md).
 
 ---
@@ -304,6 +343,7 @@ Define minimum BANTT scores required to advance from each stage.
 - **Organizational restructure**: Re-score Authority (new decision makers) and Timeline (priorities may shift).
 - **Scope change**: Re-score Need and Tech-fit. Larger scope may improve need but reduce tech-fit.
 - **New regulation or market event**: Re-score Timeline (may create urgency) and Need (may increase pain).
+- **Decision date slips**: Re-score Decision Date. If date slides more than one quarter, investigate root cause and re-score all dimensions — slipping dates often signal deeper disengagement or budget risk.
 
 ### Re-qualification Process
 

@@ -45,9 +45,12 @@ This is NOT a detailed project plan — it is a pre-sale solution sketch at the 
 ## Inputs
 
 - **`discovery-notes.md`** — from `commercial-discovery` (primary source of pain points and context)
-- **`qualification-scorecard.md`** — from `commercial-qualification` (validates opportunity quality and fit)
+- **`qualification-scorecard.md`** — from `commercial-qualification` (validates opportunity quality, fit, and branch)
+- **`discovery-proposal-deliverables.md`** *(Branch B only)* — outputs from a completed Strategic Discovery engagement. When present, this is the PRIMARY input and overrides discovery-notes as the source of truth for architecture, risks, and estimation. Estimation accuracy improves to +/- 20% or better.
 - **`commercial-state.md`** — current pipeline context
 - **`user_input`** — technical constraints, preferences, capacity, or additional context
+
+**Branch context note**: When the qualification scorecard shows `branch: B` and a linked Discovery opportunity is `closed_won`, the solution-design is for the **implementation opportunity** following the Discovery. In this case, estimation carries lower uncertainty — target +/- 20% instead of the standard +/- 30%, and Phase 0 (Assessment) may be shortened or skipped if Discovery already covered it.
 
 ## Solution Design Principles
 
@@ -114,7 +117,9 @@ Produce preliminary estimates as ranges using the three-point method:
 
 Consult `references/estimation-guide.md` for benchmarks by service type and estimation methodology.
 
-At this stage, estimates carry ±30% accuracy. Communicate this explicitly.
+**Estimation accuracy by context**:
+- Standard (discovery notes only): estimates carry +/- 30% accuracy. Communicate this explicitly.
+- Post-Discovery (Branch B, Discovery deliverables available): estimates carry +/- 20% accuracy. Note that a completed Discovery is the source of the improved confidence.
 
 ### 7. Assess Risks & Dependencies
 

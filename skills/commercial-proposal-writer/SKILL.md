@@ -26,10 +26,15 @@ The preliminary `workplan-and-estimate.md` produced by this skill is the EXACT i
 ## Inputs
 - **solution-brief-{slug}.md**: Output from `commercial-solution-design` (required).
 - **discovery-notes-{slug}.md**: Output from `commercial-discovery` (for context).
-- **qualification-scorecard-{slug}.md**: Output from `commercial-qualification` (validates pursuit decision).
+- **qualification-scorecard-{slug}.md**: Output from `commercial-qualification` (validates pursuit decision and branch).
 - **prospect-profile-{slug}.md**: Output from `commercial-prospecting` (company/contact context).
+- **discovery-proposal-deliverables.md** *(Branch B post-Discovery only)*: When this opportunity follows a completed Discovery engagement, include the Discovery deliverables as context. Reference the Discovery in the proposal — it demonstrates prior investment and reduces client skepticism about scope.
 - **commercial-state.md**: Current pipeline state.
 - **user_input**: Pricing parameters, team rates, specific terms, client preferences, competitive context.
+
+**Branch context**: Check the opportunity `branch` in `commercial-state.md`:
+- **Branch A**: Standard implementation proposal. No prior Discovery. Estimation carries +/- 30% caveat if relevant.
+- **Branch B (post-Discovery)**: Implementation proposal following a completed Discovery engagement. The proposal should reference the Discovery outputs as the basis for scope and estimation. Estimation carries +/- 20% confidence. Optionally include a brief "What the Discovery Revealed" section to reinforce the value of the prior investment and justify the proposed approach.
 
 ## Proposal Pyramid Framework (CLOSE)
 
