@@ -60,7 +60,6 @@ This repository centralizes agents, skills, and reusable templates for commercia
 |----------------------------------|----------------------------------------------------|
 | brainstorming                    | Structured ideation/brainstorming                  |
 | dispatching-parallel-agents      | Concurrent/parallel agent execution                |
-| product-customer-discovery       | Product-focused exploratory discovery              |
 
 ---
 
@@ -69,7 +68,7 @@ This repository centralizes agents, skills, and reusable templates for commercia
 ```
 Prospecting → Outreach → Discovery → Qualification → Solution Design → Proposal → Negotiation → Close
                                                                                ↓
-                                                            project-intake-and-charter (PM Suite)
+                                                             project-intake-and-charter (PM Suite)
                                                                                ↓
 Account Growth ← project-closure-and-learning ← ... PM delivery lifecycle ...
 ```
