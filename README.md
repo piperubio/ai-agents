@@ -33,9 +33,10 @@ This repository centralizes agents, skills, and reusable templates for commercia
 | Prospecting          | commercial-prospecting                   | Research, score and profile clients/leads (ICP, maturity, etc.)        |
 | Outreach             | commercial-outreach                      | Omnichannel outreach sequences, consultative tone                      |
 | Discovery            | commercial-discovery                     | B2B discovery meetings, SPIN, stakeholder/agenda mapping, notes        |
-| Qualification        | commercial-qualification                 | Opportunity scoring (BANTT), go/no-go                                  |
-| Solution Design      | commercial-solution-design               | Pre-sales technical solution, roadmap, estimation, risks               |
-| Proposal             | commercial-proposal-writer               | Formal proposal, pricing, workplan export (feeds PM suite)             |
+| Qualification        | commercial-qualification                 | Opportunity scoring (BANTTD) and **Branch Selection (A vs B)**         |
+| Solution Design      | commercial-solution-design               | **(Branch A)** Pre-sales technical solution, roadmap, estimation       |
+| Strategic Discovery  | commercial-discovery-proposal            | **(Branch B)** Paid discovery proposal to reduce scope uncertainty     |
+| Proposal Writer      | commercial-proposal-writer               | Formal implementation proposal and pricing export                      |
 | Negotiation          | commercial-negotiation                   | Consulting negotiation playbooks, handling objections                  |
 | Account Growth       | commercial-account-growth                | Expansion, upsell/cross-sell, delivery/closure feedback loop           |
 
@@ -55,21 +56,36 @@ This repository centralizes agents, skills, and reusable templates for commercia
 | Stakeholder Comms  | project-stakeholder-communication        | Stakeholder-tailored comms, templates, reports                        |
 | Closure & Learning | project-closure-and-learning             | Formal closure, lessons learned, final report                         |
 
-### Utility / Cross-Cutting Skills
-| Skill Dir                        | Short Description                                  |
-|----------------------------------|----------------------------------------------------|
-| brainstorming                    | Structured ideation/brainstorming                  |
-| dispatching-parallel-agents      | Concurrent/parallel agent execution                |
+---
+
+## 🛤️ Commercial Pipeline Branches (A vs B)
+
+The commercial agent evaluates the clarity of scope and requirements during the **Qualification** phase to decide which path to follow:
+
+- **Branch A (Direct Implementation)**: Followed when requirements are clear and estimation uncertainty is low (+/- 20%). Leads directly to a full implementation proposal.
+- **Branch B (Strategic Discovery)**: Followed when uncertainty is high. Instead of guessing, we sell a **Paid Strategic Discovery** engagement to define the roadmap and scope. Once closed and executed, it feeds back into Branch A for the implementation phase.
 
 ---
 
 ## 🔗 Integration and Commercial–PM Pipeline Flow
 
 ```
-Prospecting → Outreach → Discovery → Qualification → Solution Design → Proposal → Negotiation → Close
-                                                                               ↓
-                                                             project-intake-and-charter (PM Suite)
-                                                                               ↓
+Prospecting → Outreach → Discovery → Qualification
+                                         ↓
+                    /-----------------------------------------\
+                    ↓                                         ↓
+              [Branch A]                                  [Branch B]
+           Solution Design                           Strategic Discovery
+           (Direct Prop)                                (Paid Service)
+                    ↓                                         ↓
+             Proposal Writer                             Negotiation
+                    ↓                                         ↓
+                    \-----------------------------------------/
+                                         ↓
+                                 Negotiation → Close
+                                         ↓
+                        project-intake-and-charter (PM Suite)
+                                         ↓
 Account Growth ← project-closure-and-learning ← ... PM delivery lifecycle ...
 ```
 
