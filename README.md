@@ -39,6 +39,11 @@ This repository centralizes agents, skills, and reusable templates for commercia
 | Negotiation          | commercial-negotiation                   | Consulting negotiation playbooks, handling objections                  |
 | Account Growth       | commercial-account-growth                | Expansion, upsell/cross-sell, delivery/closure feedback loop           |
 
+### Product Pipeline (Product)
+| Phase                | Skill Dir                                | Short Description                                                      |
+|----------------------|------------------------------------------|-----------------------------------------------------------------------|
+| Product Discovery    | product-customer-discovery               | Product-focused exploratory discovery                                 |
+
 ### Project Management Pipeline (PM Suite)
 | Phase              | Skill Dir                                | Short Description                                                     |
 |--------------------|------------------------------------------|-----------------------------------------------------------------------|
