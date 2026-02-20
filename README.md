@@ -55,7 +55,7 @@ This repository centralizes agents, skills, and reusable templates for commercia
 |----------------------------------|----------------------------------------------------|
 | brainstorming                    | Structured ideation/brainstorming                  |
 | dispatching-parallel-agents      | Concurrent/parallel agent execution                |
-| customer-discovery               | General purpose exploratory discovery              |
+| product-customer-discovery       | Product-focused exploratory discovery              |
 
 ---
 

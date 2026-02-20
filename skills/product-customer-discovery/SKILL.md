@@ -1,13 +1,13 @@
 ---
-name: customer-discovery
+name: product-customer-discovery
 description: >
-  Plan and run customer discovery interviews and synthesize actionable customer insights.
+  Plan and run product-focused customer discovery interviews and synthesize actionable customer insights.
   Use when you need to define discovery goals/hypotheses, identify an ICP/segments, create a
   recruiting plan, write an interview guide, conduct interviews, analyze notes (themes, JTBD,
   pains/gains), and produce a discovery readout with opportunities, risks, and next experiments.
 ---
 
-# Customer Discovery
+# Product Customer Discovery
 
 ## Purpose
 - Reduce product/market risk by learning how target users behave today, what problems they truly have, and what they already do to solve them.
@@ -15,7 +15,7 @@ description: >
 
 ## Quick triggers
 Use this skill when the user asks for:
-- “customer discovery”, “user research”, “problem interviews”, “exploratory interviews”
+- “product customer discovery”, “user research”, “problem interviews”, “exploratory interviews”
 - “write an interview script/guide”, “what questions should I ask users”
 - “define ICP/personas/segments”, “JTBD”, “pain points”, “opportunity sizing (qual)”
 - “synthesize interview notes”, “extract themes/insights”, “create a discovery report”
