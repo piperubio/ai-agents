@@ -23,6 +23,8 @@ description: >
 ## Scope: What you do and do not do
 - **You WILL**:
     - Produce a comprehensive `project-plan.md` containing WBS, Schedule, Budget, and Resource Plan.
+    - Produce a comprehensive `project-plan.md` containing WBS, Schedule, Budget, and Resource Plan.
+    - Produce a formal `workplan-and-estimate.md` when the project includes operational cutover or billing-sensitive work; this document must be used to request Owner approval prior to execution.
     - Update `project-state.md` to reflect the planning phase progress and baselines.
     - Identify detailed dependencies and critical path risks.
     - Ask clarifying questions if the Charter is too vague for detailed planning.
@@ -71,6 +73,8 @@ Updates:
 - `Open Decisions`: Add a new section for decisions that are pending or require user action.
 - `Execution Log`: Log the creation of the plan.
 - `Risks`: Add specific planning/execution risks.
+
+When a `workplan-and-estimate.md` is created, the skill must populate an "Approval" section in the document and ensure `project-state.md` contains an Execution Log entry: "Workplan created — awaiting Owner approval (48 h)".
 
 ## Example Execution
 

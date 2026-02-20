@@ -26,6 +26,7 @@ Scope: What this skill does and does not do
   - Identify key stakeholders
   - Identify initial project risks
   - Detect critical information gaps and create clarifying questions
+  - Produce, when requested or when the project will include cutover/production work, a high-level `workplan-and-estimate.md` (WBS + hours + cost estimate) to be used for Owner approval prior to execution.
 
 - This skill WILL NOT:
   - Produce detailed plans
@@ -65,6 +66,8 @@ Updates specific sections of the state to reflect the new definition:
   - `current_action`: "Reviewing Charter with stakeholders."
   - `next_actions`: "Obtain approval", "Initiate High-Level Planning."
 - `## active_questions`: (If any)
+
+If a `workplan-and-estimate.md` is generated, the Execution Log must record its creation and the approval request; add a `next_action`: "Await Owner approval (48 h)".
 
 ---
 

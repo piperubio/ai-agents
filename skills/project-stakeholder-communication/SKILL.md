@@ -40,6 +40,10 @@ The output must be a Markdown document containing:
 ### 3. Updated Artifacts
 - **`project_state.md`**: Update 'recent_decisions' or 'stakeholders' if the communication implies a change in engagement.
 
+Templates and approval flow (additions):
+- Provide an "Approval Request" email template that attaches `workplan-and-estimate.md`, sets a 48 h response deadline, and instructs Owners to reply with explicit approval or register the decision in `decision-log.md`.
+- Provide an "Escalation" template addressed to Sponsor to be used when Owners do not respond in 48 h.
+
 ## Example Scenarios
 
 ### Scenario A: Weekly Client Update (Bad News)

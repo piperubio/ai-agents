@@ -40,6 +40,10 @@ The output must be a Markdown document containing:
 - **Directives**: Specific actions for the user/team (e.g., "Chase @Designer for Header").
 - **Alerts**: "Risk R-02 is materializing due to Task T-10 delay."
 
+Responsibilities (additional guardrails):
+- Verify that an approval entry exists in `decision-log.md` for any `workplan-and-estimate.md` before marking Cutover/Production tasks as `in_progress`.
+- If no approval is present within 48 hours of the approval request, automatically escalate to the Sponsor and record the escalation in `task-log.md` and `decision-log.md`.
+
 
 
 ## Example Scenarios
