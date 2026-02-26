@@ -524,3 +524,235 @@ python3 "$PLUGIN_DIR/skills/pandoc/scripts/validate.py" document.md
 ```
 
 This tool catches most common errors before conversion.
+
+---
+
+## Business Proposal Formatting Issues
+
+Common formatting problems when creating business proposals or commercial documents.
+
+### Lists Not Rendering Correctly
+
+**Problem:** Lists render inline instead of as bullet points
+
+**Causes:**
+
+1. **Missing blank line before list:**
+   ```markdown
+   # ❌ Wrong - text immediately before list
+   **Alcance**:  
+   * Item 1
+   * Item 2
+
+   # ✅ Correct - blank line before list
+   **Alcance**:
+
+   * Item 1
+   * Item 2
+   ```
+
+2. **Inconsistent list markers:**
+   ```markdown
+   # ❌ Wrong - mixing * and - in same list
+   * Item 1
+   - Item 2
+
+   # ✅ Correct - use consistent markers
+   * Item 1
+   * Item 2
+   ```
+
+**Solution:** Always add a blank line before lists and use consistent markers (`*` or `-`).
+
+### Section Separators Creating Large Spaces
+
+**Problem:** `---` creates excessive white space in PDF output
+
+**Solution:** Remove `---` separators in business proposals. Use natural paragraph breaks instead:
+
+```markdown
+# ❌ Wrong
+## Section A
+
+Content...
+
+---
+
+## Section B
+
+# ✅ Correct
+## Section A
+
+Content...
+
+## Section B
+```
+
+### Title Hierarchy Issues
+
+**Problem:** TOC shows nested numbering like "1.3.2.0.1" or titles don't separate properly
+
+**Solutions:**
+
+1. **Control TOC depth:**
+   ```yaml
+   # In frontmatter
+   toc: true
+   toc-depth: 2    # Shows ## and ### in TOC
+   # toc-depth: 3  # More detailed (includes ####)
+   ```
+
+2. **Use consistent heading levels:**
+   ```markdown
+   # ❌ Wrong - skipping levels
+   # Main Title
+   #### Very Deep Subsection
+
+   # ✅ Correct - sequential levels
+   # Main Title
+   ## Section
+   ### Subsection
+   ```
+
+3. **For business proposals, prefer:**
+   ```markdown
+   # Proposal Title (main)
+   ## Executive Summary
+   ## Problem Statement
+   ## Solution
+   ### Phase 1
+   ### Phase 2
+   ## Investment
+   ## Terms
+   ```
+
+### Objectives on Same Line as Title
+
+**Problem:** Text appears immediately after title on same line
+
+**Solution:** Add blank line after heading:
+
+```markdown
+# ❌ Wrong
+### Phase 1: Development
+**Objective**: Build the system
+
+# ✅ Correct
+### Phase 1: Development
+
+**Objective**: Build the system
+```
+
+### Page Breaks
+
+**Problem:** Need to control where pages break
+
+**Solution:** Use `\pagebreak` in markdown:
+
+```markdown
+## Section One
+
+Content...
+
+\pagebreak
+
+## Section Two
+
+Content...
+```
+
+Or use HTML comment:
+```markdown
+## Section One
+
+Content...
+
+<!-- pagebreak -->
+
+## Section Two
+```
+
+### Mermaid Diagrams Not Rendering
+
+**Problem:** Mermaid code blocks don't render in PDF
+
+**Cause:** LaTeX doesn't natively support Mermaid syntax
+
+**Solution:** Convert to PNG using an external service:
+
+```bash
+# Using Kroki API
+curl -s -X POST https://kroki.io/mermaid/png \
+  -H "Content-Type: text/plain" \
+  -d 'flowchart LR
+      A[Step 1] --> B[Step 2]' > diagram.png
+```
+
+Then reference in markdown:
+```markdown
+![Process Diagram](diagram.png)
+```
+
+**Note:** SVGs don't work well with LaTeX. Always use PNG or PDF for images in PDF output.
+
+### Image Path Issues
+
+**Problem:** Images don't appear in PDF
+
+**Solutions:**
+
+1. **Use relative paths from conversion directory:**
+   ```markdown
+   # ❌ Wrong
+   ![](C:/Users/name/images/diagram.png)
+
+   # ✅ Correct - relative path
+   ![](images/diagram.png)
+   ```
+
+2. **Avoid spaces in filenames:**
+   ```markdown
+   # ❌ Wrong
+   ![](my diagram.png)
+
+   # ✅ Correct
+   ![](my-diagram.png)
+   ```
+
+3. **Convert SVG to PNG:**
+   ```bash
+   # SVG doesn't work with LaTeX
+   # Convert using Kroki or other tool
+   curl -s -X POST https://kroki.io/mermaid/png -d '...' > diagram.png
+   ```
+
+### Unicode/Encoding Issues
+
+**Problem:** Special characters (ñ, á, é, etc.) don't render
+
+**Solution:** Use XeLaTeX engine:
+
+```bash
+pandoc document.md -o document.pdf --pdf-engine=xelatex
+```
+
+Or add to frontmatter:
+```yaml
+pdf-engine: xelatex
+```
+
+### Windows Docker Path Issues
+
+**Problem:** Docker fails with path errors on Windows
+
+**Solution:** Use forward slashes and absolute paths:
+
+```bash
+# ❌ Wrong
+docker run --rm -v "%cd%:/data" ...
+
+# ✅ Correct
+docker run --rm -v "C:/Users/name/project:/data" ...
+```
+
+Or omit `-w` flag on Windows.

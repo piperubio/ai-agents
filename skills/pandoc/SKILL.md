@@ -93,6 +93,8 @@ toc-own-page: true
 ---
 ```
 
+> **For business proposals**, see `references/business_proposals.md` for complete templates and best practices.
+
 See `references/eisvogel.md` for the full list of Eisvogel variables.
 
 ## Citations (BibTeX / CSL)
@@ -190,3 +192,4 @@ Load these when you need detailed information:
 - **`references/docker.md`** — Docker image variants (`pandoc/core`, `pandoc/latex`, `pandoc/extra`), tagging, and CI/CD usage
 - **`references/troubleshooting.md`** — Common errors with fixes (YAML syntax, missing LaTeX packages, fonts, images, Unicode)
 - **`references/snippets.md`** — Copy-paste commands for common workflows
+- **`references/business_proposals.md`** — Templates and best practices for business proposals (lists, diagrams, hierarchy, branding)
