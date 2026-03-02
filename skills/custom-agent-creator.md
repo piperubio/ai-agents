@@ -1,40 +1,40 @@
 ---
 name: custom-agent-creator
-description: Skill para definir agentes enfocados, con propósito claro, hasta tres objetivos y selección de skills asociadas.
-version: 0.1.0
-author: tu_nombre_o_usuario
+description: Skill to define focused agents, with a clear purpose, up to three concrete goals, and selected enabled skills.
+version: 0.2.0
+author: your_name_or_github
 ---
 
 # Custom Agent Creator Skill
 
-Esta skill guía paso a paso la definición de un agente con propósito, objetivos concretos, comportamiento, entradas/salidas y las skills/habilidades que podrá usar.
+This skill provides a step-by-step workflow to define a high-confidence, purposeful agent: clear mission, up to three actionable goals, personality, I/O, and allowed agent skills. Follows best practices for agent clarity, reusability, and modularity inspired by the top open skills.
 
-## Flujo de Creación
+## Agent Definition Workflow
 
-1. **Nombre del agente:**  
-   _Ejemplo_: "Supervisor de Incidentes"
+1. **Agent Name:**  
+   _Example_: "Incident Supervisor"
 
-2. **Propósito principal:**  
-   _Describe en una frase simple para qué existe este agente._
-   - Ejemplo: "Monitorear y clasificar incidentes para priorización automática."
+2. **Main Purpose:**  
+   _Describe in a single, clear sentence why this agent exists._
+   - Example: "Monitor and classify incidents for automated prioritization."
 
-3. **Objetivos (máx 3):**  
-   - 1. _Ejemplo_: Detectar incidentes críticos en tiempo real.
-   - 2. _Ejemplo_: Notificar responsables según la prioridad.
-   - 3. _Ejemplo_: Generar reportes semanales de tendencias.
+3. **Goals (up to 3):**  
+   - 1. _Example_: Detect critical incidents in real-time.
+   - 2. _Example_: Notify the relevant people according to severity.
+   - 3. _Example_: Generate weekly trend reports.
 
-4. **Personalidad/comportamiento:**  
-   - _Ejemplo_: Formal y preciso, sin lenguaje coloquial.
-   - Restricciones: No debe borrar reportes, ni ignorar incidentes sin notificar.
+4. **Personality & Behavior:**  
+   - _Example_: Formal and precise, never uses colloquial language.
+   - Restrictions: Must never delete reports or ignore unresolved incidents.
 
-5. **Entradas esperadas:**  
-   - _Ejemplo_: Logs de sistema, alertas, tickets de soporte.
+5. **Expected Inputs:**  
+   - _Example_: System logs, alerts, support tickets.
 
-6. **Salidas/acciones:**  
-   - _Ejemplo_: Alertas por email, actualización de tablero, generación de PDF.
+6. **Outputs / Actions:**  
+   - _Example_: Email alerts, dashboard updates, PDF report generation.
 
-7. **Skills asociadas:**  
-   _Selecciona de la lista activable para este agente._
+7. **Enabled Skills:**  
+   _Select from installed/available skills the agent can use._
    - [ ] notifications
    - [ ] email-sender
    - [ ] github-issues
@@ -42,29 +42,39 @@ Esta skill guía paso a paso la definición de un agente con propósito, objetiv
    - [ ] weather
    - ...
 
-8. **(Opcional) Plantilla base:**  
-   - Basar en: [Organizador de tareas], [Scraper], [Analista de datos], etc.
+8. **(Optional) Template inspiration:**  
+   - Base on: [Task Organizer], [Scraper], [Data Analyst], etc.
 
-## Ejemplo de definición final
+## Example Agent Definition
 
 ```yaml
 agent:
-  name: Supervisor de Incidentes
-  purpose: Monitorear y clasificar incidentes para priorización automática.
-  objectives:
-    - Detectar incidentes críticos en tiempo real.
-    - Notificar responsables según la prioridad.
-    - Generar reportes semanales de tendencias.
-  persona: Formal y preciso.
-  restrictions: No debe borrar reportes, ni ignorar incidentes sin notificar.
-  inputs: Logs de sistema, alertas, tickets.
-  outputs: Alertas por email, reportes PDF.
+  name: Incident Supervisor
+  purpose: Monitor and classify incidents for automated prioritization.
+  goals:
+    - Detect critical incidents in real-time.
+    - Notify the relevant people according to severity.
+    - Generate weekly trend reports.
+  personality: Formal and precise.
+  restrictions: Must never delete reports or ignore unresolved incidents.
+  inputs: System logs, alerts, tickets.
+  outputs: Email alerts, PDF reports.
   skills:
     - github-issues
     - email-sender
     - pdf-generator
 ```
 
-## Activación e instalación
+## Validation & Best Practices Checklist
 
-Sigue el flujo guiado para recoger los datos y genera automáticamente la definición/archivo del nuevo agente.
+- [x] Purpose is clear and actionable
+- [x] 1-3 goals, each measurable
+- [x] Personality and boundaries defined
+- [x] Inputs/outputs concrete
+- [x] Only necessary skills enabled
+- [x] Example included
+- [x] Follows markdown skill metadata in frontmatter
+
+## Activation & Usage
+
+Follow the guided prompts to collect details and generate your agent definition file. Ready for install or extension.
