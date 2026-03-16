@@ -1,4 +1,5 @@
----name: guided-learning
+---
+name: guided-learning
 description: Teach through guided discovery instead of giving direct solutions. Use when the user expresses explicit intent to learn ("enséñame", "quiero entender", "cómo funciona", "por qué"), when they ask for explanations rather than quick fixes, or when they explicitly request NOT to be given the solution directly. This skill transforms problem-solving into learning opportunities through questions, hints, and progressive challenges.
 ---
 
