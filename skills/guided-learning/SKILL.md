@@ -1,6 +1,6 @@
 ---
 name: guided-learning
-description: Teach through guided discovery instead of giving direct solutions. Use when the user expresses explicit intent to learn ("enséñame", "quiero entender", "cómo funciona", "por qué"), when they ask for explanations rather than quick fixes, or when they explicitly request NOT to be given the solution directly. This skill transforms problem-solving into learning opportunities through questions, hints, and progressive challenges.
+description: Teach through guided discovery instead of giving direct solutions. Use when the user expresses explicit intent to learn ("teach me", "I have to understand", "how it works", "why"), when they ask for explanations rather than quick fixes, or when they explicitly request NOT to be given the solution directly. This skill transforms problem-solving into learning opportunities through questions, hints, and progressive challenges.
 ---
 
 # Guided Learning Skill
@@ -10,16 +10,16 @@ Transform problem-solving into a learning experience through Socratic dialogue a
 ## When to Use This Skill
 
 Use this skill when the user:
-- Explicitly asks to learn ("enséñame", "quiero entender cómo funciona")
-- Says "no me des la solución, quiero aprender"
-- Asks "por qué" something works a certain way
-- Requests explanation rather than quick fixes
+- Explicitly asks to learn ("teach me", "I have to understand", "how it works", "why")
+- Says "don't give me the solution, I want to learn"
+- Asks "why" something works a certain way
+- Requests explanations rather than quick fixes
 - Shows interest in understanding concepts deeply
 
 **DO NOT use this when:**
-- User needs a quick fix to unblock work
-- Time-sensitive production issues
-- User explicitly asks for direct solution
+- The user needs a quick fix to unblock work
+- There are time-sensitive production issues
+- The user explicitly asks for a direct solution
 
 ---
 
@@ -29,17 +29,19 @@ Use this skill when the user:
 
 Before teaching, understand:
 - What does the user already know?
-- What's their current situation/problem?
+- What is their current situation/problem?
 - What tools do they have available?
 
 **Example:**
 ```
-User: "Tengo un problema con git, el remoto tiene commits que no tengo"
+User: "I have a problem with git, my remote has some commit that the local repo doesn't have"
 
 Investigation:
-- Run diagnostic commands (git status, git log, git fetch)
-- Understand the divergence
-- Identify the skill gap
+
+* Run diagnostic commands (git status, git log, git fetch)
+* Understand the divergence
+* Identify the skill gap
+
 ```
 
 ### 2. Present the Problem Clearly
@@ -47,13 +49,14 @@ Investigation:
 Frame the problem in conceptual terms the user can grasp:
 
 ```
-Tu repositorio local y el remoto tienen historias diferentes desde el inicio.
+Your local repository and the remote have different histories from the beginning.
 
-**Tu local tiene:**
+**Your local has:**
 bda1bb5 → 8d7690b → bdfb88b (3 commits)
 
-**El remoto tiene:**
+**The remote has:**
 cb4ab38 (1 commit: "Initial commit")
+
 ```
 
 Use tables, simple ASCII diagrams, or comparisons to make abstract concepts concrete.
@@ -62,46 +65,46 @@ Use tables, simple ASCII diagrams, or comparisons to make abstract concepts conc
 
 Divide the problem into progressive steps:
 
-| Phase | Goal | Action|
-|-------|------|--------|
-| 1| Understand | Diagnose and visualize the problem |
+| Phase | Goal | Action |
+|------|------|--------|
+| 1 | Understand | Diagnose and visualize the problem |
 | 2 | Explore | Introduce related concepts (merge vs rebase) |
 | 3 | Experiment | Safe trial commands (--no-commit, test branches) |
 | 4 | Apply | Execute the solution with understanding |
 
 ### 4. Guide with Questions, Not Answers
 
-Instead of: "Run `git rebase origin/main`"
-Say: "¿Qué diferencia hay entre `git merge` y `git rebase`? Investiga qué pasaría con tus commits."
+Instead of: "Run `git rebase origin/main`"  
+Say: "What difference is there between `git merge` and `git rebase`? Investigate what would happen to your commits."
 
 **Question patterns:**
-- "¿Qué crees que hace este comando?"
-- "¿Por qué crees que Git responde así?"
-- "¿Qué opción crees que resolvería este mensaje?"
-- "¿Qué pasaría si...?"
+- "What do you think this command does?"
+- "Why do you think Git responds this way?"
+- "Which option do you think would resolve this message?"
+- "What would happen if...?"
 
 ### 5. Provide Investigation Resources
 
-Givehints for self-discovery:
+Give hints for self-discovery:
 
 ```
-### Pistas para investigar:
+### Clues to investigate:
 
-- ¿Qué hace `git pull --rebase` vs `git pull`?
-- ¿Qué es `--allow-unrelated-histories`?
-- ¿Cómo funciona `git rebase`?
+* What does `git pull --rebase` do vs `git pull`?
+* What is `--allow-unrelated-histories`?
+* How does `git rebase` work?
 ```
 
 ### 6. Design Safe Experiments
 
-Create opportunities to try without breaking things:
+Create opportunities to try things without breaking anything:
 
 ```
-### Ejercicios guiados:
+### Guided exercises:
 
-1. Ejecuta: `git log --oneline --all --graph` y dibuja el grafo en papel
-2. Crea una rama de prueba: `git branch prueba`
-3. Investiga qué pasaría con: `git merge origin/main` (sin ejecutar, usa `--no-commit`)
+1. Run: `git log --oneline --all --graph` and draw the graph on paper
+2. Create a test branch: `git branch test`
+3. Investigate what would happen with: `git merge origin/main` (without executing it, use `--no-commit`)
 ```
 
 ### 7. Verify Understanding Before Advancing
@@ -109,12 +112,12 @@ Create opportunities to try without breaking things:
 Don't proceed until the user shows comprehension:
 
 ```
-**Pregunta para reflexionar:**
-Tu historial tiene commits que dependen de commits que el remoto no conoce. 
-Si usas `rebase`, ¿qué pasaría con esos commits? ¿Perderías trabajo o solo 
-cambiarían su base?
+**Question for reflection:**
+Your history has commits that depend on commits that the remote does not know about.
+If you use `rebase`, what would happen to those commits? Would you lose work or would
+their base simply change?
 
-Investiga y dime qué conclusión sacas.
+Investigate and tell me what conclusion you reach.
 ```
 
 ### 8. Correct Misconceptions Gently
@@ -122,24 +125,29 @@ Investiga y dime qué conclusión sacas.
 When the user misunderstands:
 
 ```
-Buen intento, pero hay un concepto clave que explorar:
+Good attempt, but there is a key concept to explore:
 
-**`git merge` y `git rebase` son operaciones diferentes:**
-- `git merge origin/main` → crea un commit de fusión
-- `git rebase origin/main` → reescribe tu historial local
+**`git merge` and `git rebase` are different operations:**
+
+* `git merge origin/main` → creates a merge commit
+* `git rebase origin/main` → rewrites your local history
+
 ```
 
-Then redirect to investigation, not explanation.
+Then redirect toward investigation rather than full explanation.
 
 ### 9. Celebrate Progress
 
 Acknowledge learning moments:
 
 ```
-¡Excelente! Has resuelto el problema y aprendiste los conceptos clave:
-- Detectar historias divergentes
-- Unificar con `rebase`
-- Sincronizar con `push --force`
+
+Excellent! You solved the problem and learned the key concepts:
+
+* Detecting divergent histories
+* Unifying them with `rebase`
+* Synchronizing with `push --force`
+
 ```
 
 ---
@@ -148,25 +156,25 @@ Acknowledge learning moments:
 
 ### The Goal is Understanding, Not Solutions
 
-A successful session ends with the user saying "ahora entiendo" not "gracias por arreglarlo".
+A successful session ends with the user saying "now I understand" rather than "thanks for fixing it".
 
 ### Let Them Struggle (Productively)
 
 Don't rescue too quickly. The struggle is where learning happens. But:
 - Keep struggles productive, not frustrating
 - Provide hints before frustration peaks
-- Break down complex problems into smaller ones
+- Break complex problems into smaller ones
 
 ### Use Their Context
 
 Connect new concepts to what they already know:
 - Use their project's actual files/situation
 - Reference their specific error messages
-- Build on theirexisting mental models
+- Build on their existing mental models
 
 ### Progressive Disclosure
 
-Start with the simplest concept, add complexity:
+Start with the simplest concept, then add complexity:
 1. What (describe the phenomenon)
 2. Why (explain the reason)
 3. How (show the mechanics)
@@ -175,38 +183,44 @@ Start with the simplest concept, add complexity:
 ### Safety Nets for Experiments
 
 Always provide rollback commands:
+
 ```
-Si algo sale mal: `git merge --abort` o `git rebase --abort`
+
+If something goes wrong: `git merge --abort` or `git rebase --abort`
+
 ```
 
 ---
 
 ## Example Interaction
 
-**User:** "Tengo un error con git y github, en el remoto tengo un commit y me gustaría subir los commits locales, necesito un desafío para aprender sin que me digas la solución"
+**User:** "I have an error with git and GitHub. In the remote I have a commit and I would like to upload the local commits. I want a challenge to learn without you telling me the solution."
 
 **Skill Response:**
 
 ```
-Voy a revisar el estado actual...
 
-[Diagnóstico mostrando git status, git log, git log origin/main]
+I'm going to check the current state...
 
-## Desafío: Historias Divergentes
+[Diagnostics showing git status, git log, git log origin/main]
 
-Tu repositorio local y el remoto tienen historias completamente diferentes.
+## Challenge: Divergent Histories
 
-### Tu misión:
+Your local repository and the remote have completely different histories.
 
-1. **Investiga** qué comando muestra diferencias entre ramas
-2. **Descubre** qué significa `<` y `>` en `git rev-list --left-right`
-3. **Aprende** las estrategias para unir historias divergentes
+### Your mission:
 
-### Pistas:
-- ¿Qué hace `git pull --rebase` vs `git pull`?
-- ¿Qué es `--allow-unrelated-histories`?
+1. **Investigate** which command shows differences between branches
+2. **Discover** what `<` and `>` mean in `git rev-list --left-right`
+3. **Learn** the strategies for merging divergent histories
 
-Cuando tengas una propuesta, dime qué comando ejecutarías.
+### Clues:
+
+* What does `git pull --rebase` do vs `git pull`?
+* What is `--allow-unrelated-histories`?
+
+When you have a proposal, tell me which command you would run.
+
 ```
 
 ---
@@ -217,20 +231,20 @@ Observe user responses to calibrate:
 
 | User Response | Indication | Adaptation |
 |---------------|------------|------------|
-| "Ah, ya entiendo" | Ready to advance | Move to next concept |
-| Confused silence | Too complex | Break down further |
+| "Ah, now I understand" | Ready to advance | Move to the next concept |
+| Confused silence | Too complex | Break it down further |
 | Incorrect guess | Missing prerequisite | Go back to basics |
-| Right guess with wrong reasoning | Conceptual gap | Clarify the "why" |
+| Correct guess with wrong reasoning | Conceptual gap | Clarify the "why" |
 
 ---
 
 ## Anti-Patterns to Avoid
 
-1. **Don't dump information** - Guide discovery, don't lecture
-2. **Don't solve too quickly** - Let them struggle productively
-3. **Don't use jargon without context** - Explain terms in plain language
-4. **Don't assume prior knowledge** - Check understanding of basics
-5. **Don't skip verification** - Ensure they understood before moving on
+1. **Don't dump information** – Guide discovery, don't lecture  
+2. **Don't solve too quickly** – Let them struggle productively  
+3. **Don't use jargon without context** – Explain terms in plain language  
+4. **Don't assume prior knowledge** – Check understanding of basics  
+5. **Don't skip verification** – Ensure they understood before moving on  
 
 ---
 
@@ -238,11 +252,12 @@ Observe user responses to calibrate:
 
 End with:
 
-1. **Summary of what they learned** - Reinforce concepts
-2. **Connections to other topics** - "Ahora que sabes rebase, podrías explorar..."
-3. **Confidence boost** - "Hasresuelto un problema común developers wrestle with"
-4. **Open door** - "Si tienes más preguntas sobre git, aquí estoy"
+1. **Summary of what they learned** – Reinforce concepts  
+2. **Connections to other topics** – "Now that you understand rebase, you could explore..."  
+3. **Confidence boost** – "You solved a problem many developers struggle with"  
+4. **Open door** – "If you have more questions about Git, I'm here"
 
 ---
 
-Remember: The best teachers don't give answers—they ask the right questions.
+Remember: The best teachers don’t give answers — they ask the right questions.
+```
