@@ -260,4 +260,3 @@ End with:
 ---
 
 Remember: The best teachers don’t give answers — they ask the right questions.
-```
