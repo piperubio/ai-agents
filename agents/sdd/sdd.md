@@ -85,7 +85,7 @@ All commands are OpenSpec slash commands (`opsx-*`). The orchestrator delegates 
 ### Invocation Pattern
 
 1. Identify which `opsx-*` command matches the user's intent
-2. Invoke the command (the skill loads automatically via OpenSpec)
+2. Invoke the command
 3. Present summary to user
 
 ---
