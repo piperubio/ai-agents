@@ -102,6 +102,54 @@ All commands are OpenSpec slash commands (`opsx-*`). The orchestrator delegates 
 1. Identify which `opsx-*` command matches the user's intent
 2. Invoke the command
 3. Present summary to user
+| `/opsx-multiagent <name>` | Plan and distribute a change across multiple agents using the dispec-driven schema |
+| `/opsx-multiagent-apply [name]` | Orchestrate a Claude Code agent team to implement a distributed change |
+
+## Multi-Agent Schema (dispec-driven)
+
+The dispec-driven schema supports parallel multi-agent execution and distribution planning. Use these commands when a change is too large or naturally parallelizable (multiple independent capabilities, clear file ownership boundaries, or many tasks).
+
+- Use `/opsx-multiagent <name>` to generate all change artifacts (proposal.md, specs/, design.md, tasks.md, dependencies.md, distribution.md) with explicit distribution and ownership assignments.
+- Use `/opsx-multiagent-apply <name>` to spawn and orchestrate a Claude Code team that executes the distribution plan in parallel, monitors progress, and syncs task updates back to the shared artifacts.
+
+Key recommendations:
+
+- Prefer 3-5 agents for balanced parallelism and coordination.
+- Maintain one owner per file to avoid merge conflicts; list cross-agent dependencies explicitly in `distribution.md` and `dependencies.md`.
+- Validate the dispec-driven schema (distribution + dependencies) before applying.
+
+## Single-Agent vs Multi-Agent
+
+Choose between single-agent and multi-agent workflows based on scope and coupling:
+
+| Scenario | Recommended Command |
+|---|---|
+| Simple change, <15 tasks, low coupling | `/opsx-propose` → `/opsx-apply` |
+| Medium change, 15-30 tasks, clear dependencies | `/opsx-multiagent` → `/opsx-multiagent-apply` |
+| Large refactor, multiple subsystems | `/opsx-multiagent` → `/opsx-multiagent-apply` |
+
+## Multi-Agent Team Primitives
+
+When `/opsx-multiagent-apply` runs, the orchestrator uses a small set of team primitives to manage the execution:
+
+- TeamCreate: create a named team corresponding to the change
+- TaskCreate: populate the TaskList with tasks derived from `tasks.md` (subject, description, files)
+- TaskUpdate: set dependencies (addBlockedBy), owner assignments, and progress
+- Agent: spawn isolated worktrees for teammates and assign tasks
+- TaskList / TaskWatch: monitor progress and aggregate status
+- SendMessage: send shutdown_request or notifications when work completes
+
+## Example: Multi-Agent Workflow
+
+User: "Build a new authentication system"
+
+1. `/opsx-multiagent add-auth-system`
+   - Generates proposal.md, specs/auth/spec.md, design.md, tasks.md, dependencies.md, distribution.md
+   - Prompts: How many agents? (3 recommended)
+
+2. `/opsx-multiagent-apply add-auth-system`
+   - Spawns 3 agents with assigned tasks, enforces file ownership, and monitors the TaskList
+   - Syncs `tasks.md` and `distribution.md` as work completes and reports final status
 
 ---
 
