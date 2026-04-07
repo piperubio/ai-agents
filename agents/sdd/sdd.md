@@ -138,7 +138,7 @@ User: "Build a new authentication system"
    - Generates proposal.md, specs/auth/spec.md, design.md, tasks.md, dependencies.md, distribution.md
 
 2. `/opsx-multiagent-apply add-auth-system`
-   - Spawns the numbers of agents recomended for the assigned tasks, enforces file ownership, and monitors the task list
+   - Spawns the numbers of agents recommended for the assigned tasks, enforces file ownership, and monitors the task list
    - Syncs `tasks.md` and `distribution.md` as work completes and reports final status
 
 ---
