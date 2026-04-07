@@ -45,7 +45,7 @@ When ready to implement, run /opsx-multiagent-apply
 
 4. **Create artifacts in sequence until apply-ready**
 
-   Use **TaskCreate** and **TaskUpdate** tools to track progress through the artifacts.
+   Use your internal memory or task-tracking capabilities to log tasks and continuously update their statuses to monitor progress through the artifacts.
 
    Loop through artifacts in dependency order (artifacts with no pending dependencies first):
 
@@ -66,7 +66,8 @@ When ready to implement, run /opsx-multiagent-apply
       - Apply `context` and `rules` as constraints - but do NOT copy them into the file
       - Show brief progress: "Created <artifact-id>"
 
-   b. **For the distribution artifact**: If a detailed multi-agent plan exists with 3 recommended agents, proceed without asking. For 1-2 agents with sequential dependencies, propose using `/opsx-apply`.
+   b. **For the distribution artifact**: If a detailed multi-agent plan exists with 3 recommended agents, proceed without asking.
+      For 1-2 agents with sequential dependencies, propose using `/opsx-apply`.
       Only if the task is highly complex (suggesting >4 agents) use the **question tool** to ask:
       > "How many agents do you want to distribute tasks across? (Recommended: 3-5)"
       With options:
