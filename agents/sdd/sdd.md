@@ -128,27 +128,15 @@ Choose between single-agent and multi-agent workflows based on scope and couplin
 | Medium change, 15-30 tasks, clear dependencies | `/opsx-multiagent` → `/opsx-multiagent-apply` |
 | Large refactor, multiple subsystems | `/opsx-multiagent` → `/opsx-multiagent-apply` |
 
-## Multi-Agent Team Primitives
-
-When `/opsx-multiagent-apply` runs, the orchestrator uses a small set of team primitives to manage the execution:
-
-- TeamCreate: create a named team corresponding to the change
-- TaskCreate: populate the TaskList with tasks derived from `tasks.md` (subject, description, files)
-- TaskUpdate: set dependencies (addBlockedBy), owner assignments, and progress
-- Agent: spawn isolated worktrees for teammates and assign tasks
-- TaskList / TaskWatch: monitor progress and aggregate status
-- SendMessage: send shutdown_request or notifications when work completes
-
 ## Example: Multi-Agent Workflow
 
 User: "Build a new authentication system"
 
 1. `/opsx-multiagent add-auth-system`
    - Generates proposal.md, specs/auth/spec.md, design.md, tasks.md, dependencies.md, distribution.md
-   - Prompts: How many agents? (3 recommended)
 
 2. `/opsx-multiagent-apply add-auth-system`
-   - Spawns 3 agents with assigned tasks, enforces file ownership, and monitors the TaskList
+   - Spawns the numbers of agents recomended for the assigned tasks, enforces file ownership, and monitors the task list
    - Syncs `tasks.md` and `distribution.md` as work completes and reports final status
 
 ---
