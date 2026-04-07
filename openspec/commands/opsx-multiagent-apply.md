@@ -1,5 +1,5 @@
 ---
-description: Orchestrate a Claude Code agent team to implement a change in parallel. ONLY FOR MEDIUM AND LARGE IMPLEMENTATIONS
+description: Orchestrate an agents team to implement a change in parallel. ONLY FOR MEDIUM AND LARGE IMPLEMENTATIONS
 ---
 
 Orchestrate an agents team to implement a change in parallel using the distribution plan.
