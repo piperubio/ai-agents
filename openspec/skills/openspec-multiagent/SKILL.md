@@ -18,17 +18,17 @@ I'll create a change with artifacts:
 - dependencies.md (task dependency analysis)
 - distribution.md (agent assignment plan)
 
-When ready to implement, run /opsx:multiagent-apply
+When ready to implement, run /opsx-multiagent-apply
 
 ---
 
-**Input**: The argument after `/opsx:multiagent` is the change name (kebab-case), OR a description of what the user wants to build.
+**Input**: The argument after `/opsx-multiagent` is the change name (kebab-case), OR a description of what the user wants to build.
 
 **Steps**
 
 1. **If no input provided, ask what they want to build**
 
-   Use the **AskUserQuestion tool** (open-ended, no preset options) to ask:
+   Use the **question tool** (open-ended, no preset options) to ask:
    > "What change do you want to work on? Describe what you want to build or fix."
 
    From their description, derive a kebab-case name (e.g., "add user authentication" → `add-user-auth`).
@@ -51,7 +51,7 @@ When ready to implement, run /opsx:multiagent-apply
 
 4. **Create artifacts in sequence until apply-ready**
 
-   Use **TaskCreate** and **TaskUpdate** tools to track progress through the artifacts.
+   Use your internal memory or task-tracking capabilities to log tasks and continuously update their statuses to monitor progress through the artifacts.
 
    Loop through artifacts in dependency order (artifacts with no pending dependencies first):
 
@@ -72,17 +72,16 @@ When ready to implement, run /opsx:multiagent-apply
       - Apply `context` and `rules` as constraints - but do NOT copy them into the file
       - Show brief progress: "Created <artifact-id>"
 
-   b. **For the distribution artifact**: Use the **AskUserQuestion tool** to ask:
+   b. **For the distribution artifact**: If a detailed multi-agent plan exists with 3 recommended agents, proceed without asking.
+      For 1-2 agents with sequential dependencies, propose using `/opsx-apply`.
+      Only if the task is highly complex (suggesting >4 agents) use the **question tool** to ask:
       > "How many agents do you want to distribute tasks across? (Recommended: 3-5)"
-
       With options:
-      - "2 agents" - Minimum viable parallelism
       - "3 agents (Recommended)" - Good balance of parallelism and coordination
       - "4 agents" - More parallelism, moderate coordination
-      - "5 agents" - Maximum parallelism, higher coordination overhead
+      - "5+ agents" - Maximum parallelism, requires higher coordination overhead
 
-      If the user selects fewer than 2, suggest using `/opsx:propose` instead for a simpler single-agent workflow.
-      If the user requests more than 5, warn about coordination overhead and recommend 3-5 agents.
+      If the user selects fewer than 3 for a complex task, suggest `/opsx-multiagent-apply`.
 
    c. **Continue until all `applyRequires` artifacts are complete**
       - After creating each artifact, re-run `openspec status --change "<name>" --json`
@@ -90,10 +89,10 @@ When ready to implement, run /opsx:multiagent-apply
       - Stop when all `applyRequires` artifacts are done
 
    d. **If an artifact requires user input** (unclear context):
-      - Use **AskUserQuestion tool** to clarify
+      - Use **question tool** to clarify
       - Then continue with creation
 
-5. **Show final status**
+6. **Show final status**
    ```bash
    openspec status --change "<name>"
    ```
@@ -104,9 +103,8 @@ After completing all artifacts, summarize:
 - Change name and location
 - List of artifacts created with brief descriptions
 - **Agent assignment summary**: Which tasks go to which agent
-- **Token cost warning**: Remind that N agents ≈ N× token usage
 - What's ready: "All artifacts created! Ready for multi-agent implementation."
-- Prompt: "Run `/opsx:multiagent-apply` to orchestrate a Claude Code agent team for parallel implementation."
+- Prompt: "If the task is small or requires sequential execution, run /opsx-apply for a direct implementation; otherwise, run /opsx-multiagent-apply to orchestrate a team of agents for parallel execution."
 
 **Artifact Creation Guidelines**
 
