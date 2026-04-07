@@ -1,8 +1,8 @@
 ---
-description: Orchestrate a Claude Code agent team to implement a change in parallel
+description: Orchestrate a Claude Code agent team to implement a change in parallel. ONLY FOR MEDIUM AND LARGE IMPLEMENTATIONS
 ---
 
-Orchestrate a Claude Code agent team to implement a change in parallel using the distribution plan.
+Orchestrate an agents team to implement a change in parallel using the distribution plan.
 
 **Input**: Optionally specify a change name. If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.
 
@@ -45,81 +45,46 @@ Orchestrate a Claude Code agent team to implement a change in parallel using the
    - Each agent's assigned task IDs, file ownership, execution order
    - Cross-agent dependency table
 
-4. **Display token cost warning and confirm**
+4. **Populate the internal task tracking**
 
-   Show the user:
-   > **Multi-agent execution scales token costs.** With N agents, expect roughly N× the token usage of a single-agent run.
+   Use your internal memory or task-tracking capabilities to manage the overall progress of the change.
+   - Register all tasks from `tasks.md` into your own tracking context.
+   - Ensure each task record includes its metadata: the assigned agent, execution order, and any blocking dependencies.
 
-   Use the **AskUserQuestion tool** to confirm:
-   > "Ready to spawn N agents for change '<name>'? This will use approximately N× token costs."
+5. **Spawn and instruct sub-agents**
 
-   Options: "Yes, proceed" / "No, cancel"
+   Delegate the work by invoking parallel sub-agents, child instances, or background processes for each agent in the distribution plan. Provide each delegated agent with the following prompt/context:
+   
+   - **Context**:
+     - The agent's assigned task IDs and descriptions.
+     - File ownership list and execution order.
+     - Cross-agent dependencies (what to wait for).
+     - The absolute path to their specific git worktree (`../<change-name>-<agent-name>`).
+     - The absolute path to `tasks.md` in the main change directory.
+   - **Instructions**: "Use your available file reading, writing, and terminal tools to complete your assigned tasks. **After completing each task, you MUST read and update `tasks.md`** in the main change directory: find the line matching your task description and change `- [ ]` to `- [x]`. If a task is blocked, wait and periodically read `tasks.md` until your blockers are marked as complete. Reply with a summary when all your assigned tasks are done."
 
-   If cancelled, stop.
+   Spawn sub-agents with no cross-agent dependencies first. For those with dependencies, spawn them immediately after with strict instructions to monitor `tasks.md` for their unblockers.
 
-5. **Create the team**
+6. **Monitor progress**
 
-   Use `TeamCreate` with:
-   - `team_name`: the change name (kebab-case)
-   - `description`: brief description from the proposal
+   - Continuously evaluate the status of your delegated sub-agents as they work and return responses.
+   - Update your internal task tracking as sub-agents report tasks completed.
+   - Intervene if a sub-agent reports an error or needs clarification to resolve a blocker.
 
-6. **Populate the shared task list**
+   **Tasks.md sync (orchestrator as backup):**
+   - When a sub-agent reports a task completed, read `tasks.md` from the main change directory to verify the corresponding line is marked `- [x]`. 
+   - If the sub-agent failed to update it, use your file editing capabilities to update it yourself. This ensures the source of truth remains accurate.
 
-   For each task in `tasks.md`:
-   - Use `TaskCreate` with:
-     - `subject`: the task description (e.g., "1.1 Create multiagent-apply.ts file")
-     - `description`: include the `Files:` annotation content and any relevant context
-     - `activeForm`: present-continuous form (e.g., "Creating multiagent-apply.ts file")
+7. **Shutdown and report**
 
-   After all tasks are created, set up dependencies and ownership:
-   - Use `TaskUpdate` with `addBlockedBy` to link tasks per the dependency matrix in `dependencies.md`
-   - Use `TaskUpdate` with `owner` to pre-assign tasks to agents per the assignment cards in `distribution.md`
-
-7. **Spawn teammates**
-
-   For each agent in the distribution plan, use the `Agent` tool with:
-   - `name`: agent name from the distribution plan (e.g., "new-skill")
-   - `team_name`: the change name
-   - `subagent_type`: "general-purpose"
-   - `isolation`: "worktree"
-   - `prompt`: include:
-     - The agent's assigned task IDs and descriptions
-      - File ownership list
-      - Execution order
-      - Cross-agent dependencies (what to wait for)
-      - The change directory path
-      - The path to `tasks.md` in the change directory (e.g. `/path/to/openspec/changes/<name>/tasks.md`)
-      - Instructions: "Use `TaskList` to find available work. Use `TaskUpdate` to mark tasks as `in_progress` when starting and `completed` when done. **After marking a task as `completed` via TaskUpdate, you MUST also update `tasks.md`** in the change directory: find the line matching your task description and change `- [ ]` to `- [x]` for that task. This keeps the OpenSpec artifact in sync with execution progress. Check `TaskList` after completing each task for newly unblocked work."
-
-   Spawn agents that have no cross-agent dependencies first (they can start immediately).
-   Spawn agents with dependencies after — they will find their tasks blocked in the task list and wait.
-
-8. **Monitor progress**
-
-   After spawning all teammates:
-   - Teammates will send messages automatically when they complete tasks or need help
-   - Respond to teammate messages as needed (clarify questions, resolve blockers)
-   - Periodically check `TaskList` to see overall progress
-   - When a teammate reports all their tasks done, acknowledge
-
-   **Tasks.md sync (orquestador as backup):**
-   - When a teammate reports a task completed, read `tasks.md` and verify the corresponding line is marked `- [x]`. If not, update it yourself: `- [ ]` → `- [x]` for that task description.
-   - This ensures `tasks.md` stays in sync even if a teammate's worktree didn't propagate the change.
-
-9. **Shutdown and report**
-
-   When all tasks show as completed in `TaskList`:
+   When your internal tracking shows all tasks are completed and all sub-agents have returned their final summaries:
 
    **Pre-shutdown tasks.md sync:**
-   - Read `tasks.md` from the change directory
-   - Compare every task line against `TaskList` status
-   - Any line still `- [ ]` that corresponds to a completed task in `TaskList` must be updated to `- [x]`
-   - Write the corrected `tasks.md` back
+   - Read the final `tasks.md` from the main change directory.
+   - Compare every task line against your internal tracking status.
+   - Any line still marked `- [ ]` that corresponds to a completed task must be updated to `- [x]` by you.
 
-   Then:
-   - Send `shutdown_request` via `SendMessage` to each teammate
-   - Wait for shutdown confirmations
-   - Display final summary:
+   Then, display the final summary:
 
    ```
    ## Multi-Agent Implementation Complete
@@ -135,7 +100,7 @@ Orchestrate a Claude Code agent team to implement a change in parallel using the
    ...
 
    ### Next Steps
-   - Review and merge agent branches
+   - Review with `/opsx-verify`
    - Run tests to verify integration
    - Archive the change with `/opsx-archive`
    ```
@@ -143,8 +108,6 @@ Orchestrate a Claude Code agent team to implement a change in parallel using the
 **Guardrails**
 - MUST validate schema is `dispec-driven` before proceeding
 - MUST validate all artifacts are complete (especially `distribution`)
-- MUST show token cost warning and get user confirmation before spawning agents
-- MUST use `isolation: "worktree"` for all teammates to prevent file conflicts
 - MUST keep `tasks.md` in sync: agents update it on task completion, orchestrator verifies on monitoring and pre-shutdown
 - If the distribution plan shows file ownership conflicts (two agents writing same file), warn the user and ask whether to proceed or reassign
 - If a teammate reports a blocker, try to help resolve it before escalating to the user
