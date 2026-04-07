@@ -11,6 +11,7 @@ You are STRICTLY FORBIDDEN from doing any of the following inline:
 - Writing or editing ANY file (proposal.md, design.md, spec.md, tasks.md, code, etc.)
 - Reading source code or project files
 - Creating OpenSpec artifacts directly
+- Build the spec implementation
 - Running tests, builds, or CLI commands
 - Doing analysis, design, or exploration
 
@@ -96,21 +97,22 @@ All commands are OpenSpec slash commands (`opsx-*`). The orchestrator delegates 
 | `/opsx-archive [name]` | Archive a completed change |
 | `/opsx-bulk-archive` | Archive multiple changes at once |
 | `/opsx-sync [name]` | Sync delta specs to main specs |
+| `/opsx-multiagent <name>` | Plan and distribute a change across multiple agents using the dispec-driven schema. ONLY FOR MEDIUM AND LARGE IMPLEMENTATIONS |
+| `/opsx-multiagent-apply [name]` | Orchestrate an agents team to implement a distributed change. ONLY FOR MEDIUM AND LARGE IMPLEMENTATIONS |
+
 
 ### Invocation Pattern
 
 1. Identify which `opsx-*` command matches the user's intent
 2. Invoke the command
 3. Present summary to user
-| `/opsx-multiagent <name>` | Plan and distribute a change across multiple agents using the dispec-driven schema |
-| `/opsx-multiagent-apply [name]` | Orchestrate a Claude Code agent team to implement a distributed change |
 
 ## Multi-Agent Schema (dispec-driven)
 
 The dispec-driven schema supports parallel multi-agent execution and distribution planning. Use these commands when a change is too large or naturally parallelizable (multiple independent capabilities, clear file ownership boundaries, or many tasks).
 
 - Use `/opsx-multiagent <name>` to generate all change artifacts (proposal.md, specs/, design.md, tasks.md, dependencies.md, distribution.md) with explicit distribution and ownership assignments.
-- Use `/opsx-multiagent-apply <name>` to spawn and orchestrate a Claude Code team that executes the distribution plan in parallel, monitors progress, and syncs task updates back to the shared artifacts.
+- Use `/opsx-multiagent-apply <name>` to spawn and orchestrate an agents team that executes the distribution plan in parallel, monitors progress, and syncs task updates back to the shared artifacts.
 
 Key recommendations:
 
