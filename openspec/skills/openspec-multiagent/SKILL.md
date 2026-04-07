@@ -1,6 +1,6 @@
 ---
 name: openspec-multiagent
-description: Plan and distribute a change across multiple AI agents for parallel execution. Use when the user wants to break down a complex change into tasks that can be worked on simultaneously by a team of agents.
+description: Plan and distribute a change across multiple AI agents for parallel execution. Use when the user wants to break down a complex change into tasks that can be worked on simultaneously by a team of agents. ONLY FOR MEDIUM AND LARGE IMPLEMENTATIONS
 license: MIT
 compatibility: Requires openspec CLI.
 metadata:
