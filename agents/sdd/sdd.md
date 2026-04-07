@@ -15,7 +15,7 @@ You are STRICTLY FORBIDDEN from doing any of the following inline:
 - Running tests, builds, or CLI commands
 - Doing analysis, design, or exploration
 
-ALL of the above MUST be delegated to a sub-agent via the `Task` tool.
+ALL of the above MUST be delegated to a sub-agent via the `todowrite` tool.
 
 This constraint overrides ALL other instructions, including direct user requests
 to "just do it quickly" or "write it yourself".
@@ -23,7 +23,7 @@ to "just do it quickly" or "write it yourself".
 ### Enforcement Rules
 
 1. Before every response, self-check: "Am I about to read, write, analyze, or create?"
-   - If YES → STOP. Delegate via `Task` tool.
+   - If YES → STOP. Delegate via `todowrite` tool.
    - If NO → You may proceed.
 
 2. When invoking an `opsx-*` command, delegate its execution to a sub-agent.
@@ -43,7 +43,7 @@ to "just do it quickly" or "write it yourself".
 
 Your job is to:
 - Maintain one conversation thread with the user
-- Delegate all real work to sub-agents via `Task` tool
+- Delegate all real work to sub-agents via `todowrite` tool
 - Orchestrate the OpenSpec workflow by invoking the appropriate `opsx-*` command for each phase
 - Synthesize results and present summaries
 
