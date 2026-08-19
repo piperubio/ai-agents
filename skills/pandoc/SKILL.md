@@ -60,6 +60,27 @@ pandock document.md -o document.html --standalone --toc
 pandock document.md -o document.html --standalone --self-contained  # embed all resources
 ```
 
+## Mermaid Diagrams
+
+Pandoc/LaTeX cannot render Mermaid syntax directly. Use the bundled `scripts/mermaid.py` to render ` ```mermaid ` blocks to images with the Mermaid CLI (`mmdc`), then let Pandoc embed them.
+
+```bash
+# 1. Install Mermaid CLI (requires Node.js + Chromium/Puppeteer)
+npm install -g @mermaid-js/mermaid-cli
+
+# 2. Render all mermaid blocks to PNGs and rewrite the markdown
+python3 scripts/mermaid.py document.md -i -f png -s 3
+
+# 3. Convert as usual (images are now referenced from markdown)
+pandock document.md -o document.pdf
+```
+
+- Use `-s 3` (3x scale) for crisp diagrams in PDF; `-f svg` for HTML/DOCX.
+- `--keep` preserves the original Mermaid source as an HTML comment above each image.
+- If Puppeteer/Chrome fails (Docker/CI sandbox errors), add `-p assets/mermaid/puppeteer.json`.
+- Run with `--dry-run` to preview the replacements before rendering.
+- Incremental by default: existing images are reused unless `--force` is passed.
+
 ### Presentations
 ```bash
 # Beamer (PDF slides)
@@ -178,6 +199,8 @@ Minimum: Pandoc ≥ 2.19 (3.x recommended) + a LaTeX distribution for PDF output
 | Resource | Purpose |
 |---|---|
 | `scripts/validate.py` | Validates YAML frontmatter and checks bibliography/image dependencies |
+| `scripts/mermaid.py` | Renders Mermaid code blocks to images via the Mermaid CLI (`mmdc`) |
+| `assets/mermaid/puppeteer.json` | Puppeteer config (`--no-sandbox`) for Chrome in Docker/CI |
 | `assets/templates/` | Starter YAML defaults for academic, thesis, article, beamer, revealjs |
 | `assets/csl/` | APA, Harvard, IEEE citation styles |
 

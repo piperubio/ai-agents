@@ -170,6 +170,29 @@ curl -o ieee.csl https://raw.githubusercontent.com/citation-style-language/style
 curl -o chicago.csl https://raw.githubusercontent.com/citation-style-language/styles/master/chicago-author-date.csl
 ```
 
+## Mermaid Diagrams
+
+```bash
+# Install Mermaid CLI (one-time)
+npm install -g @mermaid-js/mermaid-cli
+
+# Render all mermaid blocks to PNG (3x) and rewrite markdown in place
+python3 scripts/mermaid.py document.md -i -f png -s 3
+
+# SVG for HTML output
+python3 scripts/mermaid.py document.md -o document.svg.md -f svg
+
+# Docker/CI: fix Chrome sandbox error
+python3 scripts/mermaid.py document.md -i -p assets/mermaid/puppeteer.json
+
+# Preview without rendering
+python3 scripts/mermaid.py document.md --dry-run
+
+# Full workflow
+python3 scripts/mermaid.py document.md -i -f png -s 3 && \
+pandoc document.md -o document.pdf --pdf-engine=pdflatex
+```
+
 ## Debugging
 
 ```bash

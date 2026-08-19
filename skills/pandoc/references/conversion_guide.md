@@ -162,6 +162,34 @@ pandoc doc.md -o doc.docx \
     --standalone
 ```
 
+## Mermaid Diagrams
+
+Render ` ```mermaid ` blocks to images before converting — LaTeX and DOCX can't execute Mermaid.
+
+```bash
+# Install Mermaid CLI
+npm install -g @mermaid-js/mermaid-cli
+
+# Render blocks to PNG (3x scale) and rewrite the markdown in place
+python3 scripts/mermaid.py doc.md -i -f png -s 3
+
+# SVG output for HTML/reveal.js (keeps diagrams vector-sharp)
+python3 scripts/mermaid.py doc.md -o doc.svg.md -f svg -d assets/diagrams
+
+# Preview replacements without rendering
+python3 scripts/mermaid.py doc.md --dry-run
+```
+
+Recommended formats by output:
+
+| Target | Format | Flags |
+|--------|--------|-------|
+| PDF (LaTeX) | PNG | `-f png -s 3` |
+| HTML / reveal.js | SVG | `-f svg` |
+| DOCX / EPUB | PNG | `-f png -s 2` |
+
+Docker/CI sandbox issues with Chrome: add `-p assets/mermaid/puppeteer.json`.
+
 ## Presentation Conversion
 
 ### Beamer (PDF Slides)

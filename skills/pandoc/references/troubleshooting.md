@@ -674,19 +674,53 @@ Content...
 
 ### Mermaid Diagrams Not Rendering
 
-**Problem:** Mermaid code blocks don't render in PDF
+**Problem:** Mermaid code blocks (` ```mermaid `) render as plain code or are ignored in PDF
 
 **Cause:** LaTeX doesn't natively support Mermaid syntax
 
-**Solution:** Convert to PNG using an external service:
+**Solution:** Render the blocks to images first with the bundled script + Mermaid CLI:
 
 ```bash
-# Using Kroki API
-curl -s -X POST https://kroki.io/mermaid/png \
-  -H "Content-Type: text/plain" \
-  -d 'flowchart LR
-      A[Step 1] --> B[Step 2]' > diagram.png
+# Install Mermaid CLI (requires Node.js)
+npm install -g @mermaid-js/mermaid-cli
+
+# Render all blocks and rewrite the markdown in place (3x scale for PDF)
+python3 scripts/mermaid.py document.md -i -f png -s 3
+
+# Then convert normally
+pandoc document.md -o document.pdf
 ```
+
+**Common mmdc failures:**
+
+1. **Chrome/Puppeteer sandbox error** (Docker/CI): pass the bundled no-sandbox config
+   ```bash
+   python3 scripts/mermaid.py document.md -i -p assets/mermaid/puppeteer.json
+   ```
+
+2. **`mmdc: command not found`**: install globally, or point at a custom binary
+   ```bash
+   npm install -g @mermaid-js/mermaid-cli
+   python3 scripts/mermaid.py document.md --mmdc /path/to/mmdc
+   ```
+
+3. **Diagrams look blurry in PDF**: raise the scale
+   ```bash
+   python3 scripts/mermaid.py document.md -i -f png -s 4
+   ```
+
+4. **Black boxes around transparent PNGs**: set a solid background
+   ```bash
+   python3 scripts/mermaid.py document.md -i -b white
+   ```
+
+5. **No mmdc available** — fallback to the Kroki API for a single diagram:
+   ```bash
+   curl -s -X POST https://kroki.io/mermaid/png \
+     -H "Content-Type: text/plain" \
+     -d 'flowchart LR
+         A[Step 1] --> B[Step 2]' > diagram.png
+   ```
 
 Then reference in markdown:
 ```markdown

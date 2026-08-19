@@ -136,18 +136,38 @@ Experience, methodology, differentiators...
 
 ### Including Diagrams
 
-1. **Mermaid to PNG:**
+1. **Write Mermaid blocks directly in the proposal:**
+   ```markdown
+   ```mermaid
+   flowchart LR
+       A[Discovery] --> B[Solution]
+       B --> C[Implementation]
+       C --> D[Go-live]
+   ```
+   ```
+
+2. **Render them with the bundled script (Mermaid CLI required):**
    ```bash
-   # Convert using Kroki
+   npm install -g @mermaid-js/mermaid-cli
+   python3 scripts/mermaid.py proposal.md -i -f png -s 3
+   ```
+
+   The script replaces each block with an image reference:
+   ```markdown
+   ![Diagram 1](mermaid-assets/diagram-01.png)
+   ```
+
+3. **Convert as usual:**
+   ```bash
+   pandock proposal.md -o proposal.pdf --template eisvogel
+   ```
+
+4. **Fallback without mmdc** — convert a single diagram via the Kroki API:
+   ```bash
    curl -s -X POST https://kroki.io/mermaid/png \
      -H "Content-Type: text/plain" \
      -d 'flowchart LR
          A[Start] --> B[End]' > diagram.png
-   ```
-
-2. **Reference in markdown:**
-   ```markdown
-   ![Description](diagram.png)
    ```
 
 ### Company Branding
