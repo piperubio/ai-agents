@@ -1,3 +1,5 @@
 .opencode
 .agents
 skills/requirements-engineering-iso-29148-workspace/
+# Local Pi runtime state
+.atl/

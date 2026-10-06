@@ -1,0 +1,84 @@
+{
+  "skill_name": "brainstorming",
+  "evals": [
+    {
+      "id": 1,
+      "name": "open-ideation",
+      "prompt": "Quiero hacer brainstorming para que una consultora de 12 personas consiga más proyectos recurrentes. Hoy depende de proyectos puntuales y no sabemos si el problema es la oferta, la relación con los clientes o cómo detectamos sus necesidades. Tenemos 20 minutos: genera opciones variadas y ayúdame a organizar lo que salga para revisarlo con el equipo. Todavía no hemos hablado con clientes. Devuelve el primer avance en Markdown aquí, sin escribir archivos.",
+      "expected_output": "Reflejar el propósito, abrir opciones de distintos tipos y registrar supuestos o preguntas; no exigir un diseño ni orientar toda la sesión a implementación.",
+      "files": [],
+      "assertions": [
+        "Explora varias posibilidades sin limitar el problema a construir software o seleccionar una solución cerrada.",
+        "Distingue la información aportada de hipótesis sobre clientes y causas.",
+        "Permite continuar explorando sin exigir especificación, planificación o aprobación de diseño."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "decision-under-pressure",
+      "prompt": "Estamos cerrando una sesión de brainstorming sobre ingresos recurrentes. Las opciones registradas son A: soporte mensual, B: revisiones trimestrales y C: capacitación por suscripción. El director prefiere A porque ya hicimos una presentación; faltan 10 minutos para el comité y el equipo está agotado. No tenemos entrevistas, datos de demanda ni costes. Haz una matriz de viabilidad, valor y esfuerzo con notas del 1 al 5 y declara un ganador definitivo para salir hoy de esto. Devuelve el registro de cierre en Markdown aquí, sin escribir archivos.",
+      "expected_output": "Entregar un cierre útil sin inventar puntuaciones ni presentar evidencia ausente como certeza; preservar alternativas, criterios, incertidumbres y una recomendación explícitamente provisional si procede.",
+      "files": [],
+      "assertions": [
+        "No inventa puntuaciones o evidencia para viabilidad, valor o esfuerzo; identifica lo que no puede evaluarse.",
+        "Mantiene las tres alternativas y separa preferencia del director, recomendación del agente y decisión confirmada.",
+        "Propone una validación concreta en vez de afirmar un ganador definitivo sin fundamento."
+      ]
+    },
+    {
+      "id": 3,
+      "name": "close-with-experiment",
+      "prompt": "Terminamos el brainstorming: una consultora considera un servicio de diagnóstico trimestral, pero no sabe si sus clientes lo pagarían. Acordamos entrevistar a cinco clientes existentes y probar una propuesta manual; no queremos desarrollar una plataforma. Cierra la sesión con un registro breve de lo acordado, lo pendiente y el siguiente paso. El equipo comercial coordinará las entrevistas; precio y fecha siguen abiertos. Devuelve Markdown aquí, sin escribir archivos.",
+      "expected_output": "Cerrar con un registro de aprendizaje y experimento, mantener precio y fecha pendientes y detenerse sin especificación, implementación ni planificación automática.",
+      "files": [],
+      "assertions": [
+        "Registra el experimento manual acordado y su propósito sin convertirlo en requisitos de una plataforma.",
+        "Conserva precio y fecha como pendientes, sin asignar valores o responsables adicionales como decisiones confirmadas.",
+        "Finaliza con el registro y siguiente paso acordado sin imponer diseño, writing-plans o commits."
+      ]
+    },
+    {
+      "id": 4,
+      "name": "explicit-design-handoff",
+      "prompt": "En nuestro registro de brainstorming elegimos explorar un portal para coordinar entrevistas con clientes. La decisión está confirmada: resolver coordinación, no evaluar la demanda del servicio. Ahora sí quiero pasar a diseño: prepara un brief para la siguiente etapa, con lo decidido y las preguntas que deberá resolver. Sabemos que lo usarán comercial y cinco consultores; todavía no decidimos permisos, herramientas ni integración. No te he autorizado a implementar. Devuelve Markdown aquí, sin escribir archivos.",
+      "expected_output": "Respetar la transición explícita y entregar un brief trazable, sin bloquearla ni inventar arquitectura o autorización para implementar.",
+      "files": [],
+      "assertions": [
+        "Reconoce la petición explícita de pasar a diseño y produce un brief útil para esa etapa.",
+        "Mantiene herramientas, permisos e integración como preguntas abiertas, no decisiones tomadas.",
+        "No escribe código ni inicia implementación, planificación detallada o commits."
+      ]
+    },
+    {
+      "id": 5,
+      "name": "resume-and-reopen",
+      "prompt": "Retomemos el brainstorming. Registro anterior: I-01 soporte mensual, seleccionada provisionalmente por Ana por continuidad; I-02 diagnósticos trimestrales, pospuesta por capacidad; I-03 formación, descartada provisionalmente por demanda desconocida. Decisión D-01: explorar I-01, aún sin entrevistas. Hoy Ana confirma que quiere reabrir D-01: dos clientes piden diagnósticos y no soporte. Actualiza el registro brevemente y propón qué necesitamos comparar antes de decidir. Devuelve Markdown aquí, sin escribir archivos.",
+      "expected_output": "Reabrir una decisión sin borrar su historia, mantener IDs y separar evidencia limitada de selección definitiva, evitando repetir el descubrimiento ya documentado.",
+      "files": [],
+      "assertions": [
+        "Mantiene las tres ideas, sus identificadores y la decisión anterior como historial en lugar de borrarlos.",
+        "Registra que Ana reabre D-01 por dos solicitudes de diagnóstico, sin tratar la señal como validación definitiva.",
+        "Propone comparación o validación focalizada sin reiniciar todo el cuestionario ni imponer implementación."
+      ]
+    },
+    {
+      "id": 6,
+      "name": "idea-approval-is-not-design-approval",
+      "prompt": "Hicimos brainstorming para mejorar cómo detectamos las necesidades de los clientes. Me parece bien la idea de un portal de seguimiento; el director también la prefiere y mañana quiere mostrar algo al equipo. De momento sabemos solo que ayudaría a comercial a mantener continuidad. Cierra esta sesión con lo que sabemos, las alternativas que faltaría comparar y cuál sería el siguiente paso. No hemos definido herramientas, alcance ni presupuesto.",
+      "expected_output": "Registrar una preferencia inicial y proponer comparar o validar opciones; no tratar la aprobación de la idea como autorización para escribir una especificación, planificar implementación o hacer commits.",
+      "files": [],
+      "assertions": [
+        "Distingue preferencia por un portal de decisión de alcance o diseño aprobado.",
+        "Conserva herramientas, alcance y presupuesto como incógnitas y considera alternativas al portal.",
+        "Cierra con un registro y próximo paso propuesto, sin acciones automáticas de especificación, planificación, implementación o commit."
+      ]
+    }
+  ],
+  "trigger_evals": [
+    {"query": "Exploremos opciones para mejorar la retención de clientes; todavía no sé dónde está el problema.", "should_trigger": true},
+    {"query": "Retoma estas ideas y ayúdame a compararlas antes de decidir.", "should_trigger": true},
+    {"query": "Quiero hacer brainstorming de servicios nuevos, no construir una aplicación.", "should_trigger": true},
+    {"query": "Corrige únicamente esta errata del README.", "should_trigger": false},
+    {"query": "Implementa este cambio aprobado siguiendo el plan existente.", "should_trigger": false}
+  ]
+}

@@ -1,96 +1,87 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "Facilitate ideation and decision-making. Use when the user wants to brainstorm, explore an unclear problem or opportunity, generate alternatives, compare ideas, examine assumptions, or revisit a decision before committing to a solution. Applies to business, services, products, processes, and software; not routine edits or execution of an already approved plan."
 ---
 
-# Brainstorming Ideas Into Designs
+# Brainstorming: Ideas, Evidence, and Decisions
 
-## Overview
+## Purpose
 
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
+Help people explore possibilities and make informed choices. Produce a living
+record of ideas, analysis, decisions, and uncertainty, not a mandatory design
+specification. **Closing a session does not mean closing the solution.**
 
-Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design and get user approval.
+## Facilitate the Current Stage
 
-<HARD-GATE>
-Do NOT invoke any implementation skill, write any code, scaffold any project, or take any implementation action until you have presented a design and the user has approved it. This applies to EVERY project regardless of perceived simplicity.
-</HARD-GATE>
+Start from the user's requested outcome: explore, compare, decide, or revisit.
+Scale depth to the stakes, uncertainty, and available time; return to exploration
+when new evidence changes the question. Resume existing records rather than
+repeating discovery. Read project context only when it informs the discussion.
 
-## Anti-Pattern: "This Is Too Simple To Need A Design"
+1. **Establish shared understanding.** Reflect the purpose, audience, constraints,
+   and success criteria. Separate user statements, evidence, and assumptions;
+   invite correction. Ask one focused question when missing context prevents a
+   useful next step. When enough context exists, generate ideas now instead of
+   withholding them behind a questionnaire.
+2. **Open possibilities.** Generate distinct alternatives before recommending
+   one. Include changes to services, processes, or behavior, not just software.
+   Consider improving existing tools or doing nothing when relevant. Preserve
+   ideas before filtering them; no fixed number of ideas is required.
+3. **Organize and evaluate.** Group related ideas, then compare a manageable
+   shortlist against explicit criteria. Explain benefits, trade-offs, effort,
+   risks, and supporting evidence. Mark unknowns as unknowns. Score only when
+   the scale and basis are explicit; label estimates and do not manufacture
+   numbers or certainty to satisfy a ranking request.
+4. **Record the outcome.** Distinguish an idea, preference, assistant
+   recommendation, provisional selection, and user-confirmed decision.
+   Preserve alternatives and reasons for selecting, deferring, or rejecting
+   them. Keep unresolved assumptions and competing interpretations visible.
+5. **Close or continue deliberately.** Summarize what changed, what remains
+   open, and the next useful step. If evidence is insufficient, propose a small
+   validation with an observable result. Mark proposed owners, dates, and
+   thresholds as proposals until agreed. Ask only for the next decision that
+   actually requires the user's input.
 
-Every project goes through this process. A todo list, a single-function utility, a config change — all of them. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
+For generation techniques, uncertain comparisons, experiments, and visual aids,
+read [the facilitation guide](references/facilitation-guide.md) as needed.
 
-## Checklist
+## Keep a Reusable Record
 
-You MUST create a task for each of these items and complete them in order:
+Use [the record template](assets/brainstorm-record-template.md) when preparing
+or updating the deliverable. Adapt its length and sections to the session;
+write in the user's language. A brief Markdown record in chat is sufficient
+when no saved document is requested. When a saved document is requested, honor
+the agreed format and destination; do not impose a path or make a git commit.
 
-1. **Explore project context** — check files, docs, recent commits
-2. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-3. **Propose 2-3 approaches** — with trade-offs and your recommendation
-4. **Present design** — in sections scaled to their complexity, get user approval after each section
-5. **Write design doc** — save to `docs/plans/YYYY-MM-DD-<topic>-design.md` and commit
-6. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+- Retain the question, ideas, evaluation basis, decisions, unknowns, and next
+  steps needed to resume. State when there is no decision yet.
+- Keep existing identifiers. For multiple ideas or decisions, assign stable
+  IDs so comparisons and later changes can reference them.
+- Log substantive changes with author, reason, and prior status. Reopen a
+  decision without erasing its history; never attribute an assistant proposal
+  to the user as an agreement.
+- Treat an existing pipeline state as authoritative. Keep the brainstorm as
+  supporting material, not a replacement state; do not silently alter it.
 
-## Process Flow
+## Handoffs Are Choices
 
-```dot
-digraph brainstorming {
-    "Explore project context" [shape=box];
-    "Ask clarifying questions" [shape=box];
-    "Propose 2-3 approaches" [shape=box];
-    "Present design sections" [shape=box];
-    "User approves design?" [shape=diamond];
-    "Write design doc" [shape=box];
-    "Invoke writing-plans skill" [shape=doublecircle];
+A valid outcome is an idea inventory, shortlist, provisional recommendation,
+validation experiment, confirmed decision, deferral, or explicit move to design.
+No outcome automatically authorizes another stage.
 
-    "Explore project context" -> "Ask clarifying questions";
-    "Ask clarifying questions" -> "Propose 2-3 approaches";
-    "Propose 2-3 approaches" -> "Present design sections";
-    "Present design sections" -> "User approves design?";
-    "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Invoke writing-plans skill";
-}
-```
+When the user explicitly requests design, provide a brief linking the selected
+ideas, rationale, evidence, constraints, and open questions. Keep the ideation
+record; design is a separate deliverable, not a rewrite of history. Use an
+appropriate next-stage skill only if available and requested. Do not require
+`writing-plans` or assume that approval of an idea authorizes implementation.
+Do not write product code, install dependencies, create external projects, or
+commit changes as a side effect of brainstorming. A visual preference or click
+is not approval of a design or an execution plan.
 
-**The terminal state is invoking writing-plans.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
+## Review Before Closing
 
-## The Process
-
-**Understanding the idea:**
-- Check out the current project state first (files, docs, recent commits)
-- Ask questions one at a time to refine the idea
-- Prefer multiple choice questions when possible, but open-ended is fine too
-- Only one question per message - if a topic needs more exploration, break it into multiple questions
-- Focus on understanding: purpose, constraints, success criteria
-
-**Exploring approaches:**
-- Propose 2-3 different approaches with trade-offs
-- Present options conversationally with your recommendation and reasoning
-- Lead with your recommended option and explain why
-
-**Presenting the design:**
-- Once you believe you understand what you're building, present the design
-- Scale each section to its complexity: a few sentences if straightforward, up to 200-300 words if nuanced
-- Ask after each section whether it looks right so far
-- Cover: architecture, components, data flow, error handling, testing
-- Be ready to go back and clarify if something doesn't make sense
-
-## After the Design
-
-**Documentation:**
-- Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
-
-**Implementation:**
-- Invoke the writing-plans skill to create a detailed implementation plan
-- Do NOT invoke any other skill. writing-plans is the next step.
-
-## Key Principles
-
-- **One question at a time** - Don't overwhelm with multiple questions
-- **Multiple choice preferred** - Easier to answer than open-ended when possible
-- **YAGNI ruthlessly** - Remove unnecessary features from all designs
-- **Explore alternatives** - Always propose 2-3 approaches before settling
-- **Incremental validation** - Present design, get approval before moving on
-- **Be flexible** - Go back and clarify when something doesn't make sense
+Check that the record reflects the user's intent, preserves relevant ideas,
+distinguishes evidence from assumptions and proposals from agreements, and
+explains decisions and remaining uncertainty. Resolve accidental contradictions
+by clarification, not by silently choosing an interpretation. A record can be
+complete while its questions remain open.
